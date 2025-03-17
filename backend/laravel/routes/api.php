@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\DeviceController;
+use app\Http\Controllers\UserController;
+use app\Http\Controllers\DeviceController;
 use Illuminate\Support\Facades\Route;
 
 
