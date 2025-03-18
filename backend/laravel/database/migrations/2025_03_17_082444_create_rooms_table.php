@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('devices', function (Blueprint $table) {
+        Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('type',['thermostat','lumière','caméra','capteur','autre']);
-            $table->enum('status',['actif','inactif']);
-            //Clé etrangere
-            $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('devices');
+        Schema::dropIfExists('rooms');
     }
 };
