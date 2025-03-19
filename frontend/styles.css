@@ -1,0 +1,14 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #b2b4b7;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background: #032b6b;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
