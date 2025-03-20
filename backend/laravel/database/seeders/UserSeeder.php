@@ -12,6 +12,7 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
+        DB::table('users')->truncate();
 
         $faker = Faker::create();
         
@@ -20,7 +21,7 @@ class UserSeeder extends Seeder
                 'username' => $faker->userName,
                 'email' => $faker->unique()->safeEmail,
                 'password' => Hash::make('password123'), // Mot de passe par défaut
-                'role' => $faker->randomElement(['visiteur','simple','complexe','admin']),
+                'role' => $faker->randomElement(['visiteur','simple','complexe','admin']),//invité enfant femme de menage parents
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
@@ -28,7 +29,7 @@ class UserSeeder extends Seeder
             // Insertion des tokens de réinitialisation de mot de passe
             DB::table('password_reset_tokens')->insert([
                 'email' => $user->email,
-                'token' => $faker->bin2hex(random_bytes(32)),
+                'token' => bin2hex(random_bytes(32)),
                 'created_at' => now(),
             ]);
 
@@ -36,7 +37,7 @@ class UserSeeder extends Seeder
             DB::table('sessions')->insert([
                 'id' => bin2hex(random_bytes(16)), //ID de session aléatoire
                 'user_id' => $user->id,
-                'ip_adress' => $faker->ipv4,
+                'ip_address' => $faker->ipv4,
                 'user_agent' => $faker->userAgent,
                 'payload' => json_encode(['some'=> 'data'] ),
                 'last_activity' => now()->timestamp,

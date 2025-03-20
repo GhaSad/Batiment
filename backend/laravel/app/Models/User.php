@@ -10,19 +10,10 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role'
-    ];
+    // Si nécessaire, spécifie les colonnes que tu veux permettre pour l'assignation de masse
+    protected $fillable = ['username', 'email', 'password', 'role'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -49,5 +40,13 @@ class User extends Authenticatable
 
     public function devices(){
         return $this->hasMany(Device::class);
+    }
+
+    public function userActions(){
+        return $this->hasMany(UsersAction::class);
+    }
+
+    public function logs(){
+        return $this->hasMany(Logs::class);
     }
 }
