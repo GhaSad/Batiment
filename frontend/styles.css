@@ -1,3 +1,5 @@
+/* ########################################## RESET & BASE ########################################## */
+
 * {
     margin: 0;
     padding: 0;
@@ -27,6 +29,10 @@
     margin-bottom: 20px;
   }
   
+  h2 {
+    margin-bottom: 35px;
+  }
+  
   p {
     font-size: 1rem;
     color: #4C5561;
@@ -49,9 +55,10 @@
     color: #111;
   }
   
-/* ########################################## NAVBAR ########################################## */
-
-.navbar-top {
+  
+  /* ########################################## NAVBAR ########################################## */
+  
+  .navbar-top {
     position: fixed;
     top: 20px;
     left: 50%;
@@ -60,7 +67,7 @@
     max-width: 1000px;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-    border-radius: 25px;
+    border-radius: 100px;
     padding: 10px 30px;
     display: flex;
     justify-content: center;
@@ -92,10 +99,88 @@
     display: flex;
     gap: 20px;
   }
+
+  .nav-btn {
+    width: 69px;
+    height: 64px;
+    border-radius: 45%;
+    background-color: #FFFDF0;
+    color: rgba(76, 85, 97, 0.8);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
   
+  .nav-btn i {
+    font-size: 22px;
+    color: #4C5561;
+    transition: opacity 0.3s ease;
+  }
+  
+  .nav-text {
+    position: absolute;
+    color: #FFFDF0;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    font-size: 0.9rem;
+  }
+  
+  .nav-btn:hover {
+    background-color: #B29BEB;
+  }
+  
+  .nav-btn:hover i {
+    opacity: 0;
+  }
+  
+  .nav-btn:hover .nav-text {
+    opacity: 1;
+  }
+
+  .nav-container {
+  gap: 30px; /* Ajoute un bel espace entre logo et liens */
+}
 
   
+  /* --- PROFIL CLASSES --- */
+  /* Le back peut gérer ces classes dynamiquement */
+  
+  .parent-only,
+  .enfant-only,
+  .invite-only,
+  .admin-only {
+    display: none;
+  }
+  
+  body.parent .parent-only,
+  body.admin .parent-only {
+    display: inline-block;
+  }
+  
+  body.enfant .enfant-only,
+  body.admin .enfant-only {
+    display: inline-block;
+  }
+  
+  body.invite .invite-only,
+  body.admin .invite-only {
+    display: inline-block;
+  }
+  
+  body.admin .admin-only {
+    display: inline-block;
+  }
+  
+  
   /* ########################################## MODAL STYLE ########################################## */
+  
   .modal {
     position: fixed;
     inset: 0;
@@ -142,7 +227,9 @@
     color: #B29BEB;
   }
   
+  
   /* ########################################## FORM STYLE ########################################## */
+  
   .form {
     display: flex;
     flex-direction: column;
@@ -172,6 +259,18 @@
     border-color: #B29BEB;
   }
   
+  .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+  }
+  
+  .form-group select:focus {
+    border-color: #B29BEB;
+  }
+  
   .form-link {
     margin-top: 10px;
     font-size: 0.9rem;
@@ -184,5 +283,66 @@
   
   .form-link a:hover {
     text-decoration: underline;
+  }
+  
+  
+  /* ########################################## ADMIN PAGE ########################################## */
+  
+  .admin-container {
+    margin-top: 120px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .create-user-section {
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Sections des onglets */
+  .tab-section {
+    margin-top: 120px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    text-align: center;
+  }
+  
+  /* Style plus petit pour le bouton dans navbar */
+  .small-btn {
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  
+  /* ########################################## ANIMATIONS ########################################## */
+  
+  .fade-in {
+    animation: fadeIn 0.4s ease forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   
