@@ -148,6 +148,12 @@
   gap: 30px; /* Ajoute un bel espace entre logo et liens */
 }
 
+.button-container {
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
+  gap: 20px; /* Espacement entre les boutons */
+}
+
   
   /* --- PROFIL CLASSES --- */
   /* Le back peut gérer ces classes dynamiquement */
