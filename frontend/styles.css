@@ -10,16 +10,7 @@
     background: linear-gradient(90deg, #FFFDF0 0%, #B29BEB 100%);
     font-family: 'Inter', sans-serif;
     color: #4C5561;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .container {
-    max-width: 600px;
-    text-align: left;
-    padding: 20px;
+    min-height: 100vh;
   }
   
   h1 {
@@ -49,13 +40,60 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  
+
   .btn:hover {
     background-color: #B29BEB;
     color: #111;
   }
+
+  .btn2 {
+    width: 100px;
+    height: 90px;
+    border-radius: 40px;
+    background-color: #FFFDF0;
+    color: #4C5561;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    position: relative;
+    transform: scale(1);
+  }
   
+  .btn2 i {
+    font-size: 22px;
+    color: #4C5561;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
   
+  .btn2-text {
+    color: #4C5561;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .btn2:hover i {
+    transform: rotate(15deg) scale(1.1);
+    color: #B29BEB;
+    
+  }
+  
+  .btn2:hover .btn2-text {
+    color: #B29BEB;
+  }
+  
+  .btn2:hover {
+    background-color: #FFFDF0;
+    transform: scale(1.05);
+  }
+
+
+
   /* ########################################## NAVBAR ########################################## */
   
   .navbar-top {
@@ -80,6 +118,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 30px;
   }
   
   .logo {
@@ -99,10 +138,10 @@
     display: flex;
     gap: 20px;
   }
-
+  
   .nav-btn {
     width: 60px;
-    height: 60px; 
+    height: 60px;
     border-radius: 24px;
     background-color: #FFFDF0;
     color: rgba(76, 85, 97, 0.8);
@@ -126,7 +165,7 @@
   
   .nav-text {
     color: #4C5561;
-    font-size: 0.75rem;
+    font-size: 0.80rem;
     font-weight: bold;
     transition: transform 0.3s ease, color 0.3s ease;
   }
@@ -141,45 +180,38 @@
     color: #FFFDF0;
   }
   
+  .button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
   
-
-  .nav-container {
-  gap: 30px; /* Ajoute un bel espace entre logo et liens */
-}
-
-.button-container {
-  display: flex;
-  justify-content: center; /* Centre horizontalement */
-  gap: 20px; /* Espacement entre les boutons */
-}
-
   
-  /* --- PROFIL CLASSES --- */
-  /* Le back peut gérer ces classes dynamiquement */
+  /* ########################################## PROFIL CLASSES ########################################## */
   
-  .parent-only,
-  .enfant-only,
-  .invite-only,
-  .admin-only {
+  .role-admin,
+  .role-parent,
+  .role-enfant,
+  .role-invite {
     display: none;
   }
   
-  body.parent .parent-only,
-  body.admin .parent-only {
+  body.admin .role-admin,
+  body.admin .role-parent,
+  body.admin .role-enfant,
+  body.admin .role-invite {
     display: inline-block;
   }
   
-  body.enfant .enfant-only,
-  body.admin .enfant-only {
+  body.parent .role-parent {
     display: inline-block;
   }
   
-  body.invite .invite-only,
-  body.admin .invite-only {
+  body.enfant .role-enfant {
     display: inline-block;
   }
   
-  body.admin .admin-only {
+  body.invite .role-invite {
     display: inline-block;
   }
   
@@ -252,18 +284,7 @@
     font-size: 0.9rem;
   }
   
-  .form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    outline: none;
-  }
-  
-  .form-group input:focus {
-    border-color: #B29BEB;
-  }
-  
+  .form-group input,
   .form-group select {
     width: 100%;
     padding: 10px;
@@ -272,6 +293,7 @@
     outline: none;
   }
   
+  .form-group input:focus,
   .form-group select:focus {
     border-color: #B29BEB;
   }
@@ -311,7 +333,6 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
   }
   
-  /* Sections des onglets */
   .tab-section {
     margin-top: 120px;
     padding: 20px;
@@ -322,7 +343,6 @@
     text-align: center;
   }
   
-  /* Style plus petit pour le bouton dans navbar */
   .small-btn {
     padding: 10px 20px;
     border-radius: 20px;

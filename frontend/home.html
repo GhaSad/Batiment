@@ -4,115 +4,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin - Maison Connectée</title>
+  <title>Maison Connectée - Tableau de Bord</title>
   <link rel="stylesheet" href="styles.css" />
-
-  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-
-
 </head>
 
-<body class="admin">
+<body class="parent"> <!-- Dynamique: admin, parent, enfant, invite -->
 
-  <!-- Navbar -->
+  <!-- ########################################## NAVBAR ########################################## -->
   <nav class="navbar-top">
     <div class="nav-container">
       <div class="logo">
         <i class="fas fa-house-user" style="font-size: 24px; color: #4C5561;"></i>
-        <span class="logo-text">Admin Panel</span>
+        <span class="logo-text">Maison Connectée</span>
+      </div>
+
+      <div class="nav-links">
+        <button class="nav-btn role-admin role-parent role-enfant" data-tab="securite">
+          <i class="fas fa-lock"></i>
+          <span class="nav-text">Sécurité</span>
+        </button>
+
+        <button class="nav-btn role-admin role-parent" data-tab="energie">
+          <i class="fas fa-bolt"></i>
+          <span class="nav-text">Énergie</span>
+        </button>
+
+        <button class="nav-btn role-admin role-parent role-enfant role-invite" data-tab="objets">
+          <i class="fas fa-lightbulb"></i>
+          <span class="nav-text">Objets</span>
+        </button>
+
+        <button class="nav-btn role-admin role-parent role-enfant role-invite" data-tab="pieces">
+          <i class="fas fa-house"></i>
+          <span class="nav-text">Pièces</span>
+        </button>
+
+        <button class="nav-btn role-admin" data-tab="utilisateurs">
+          <i class="fas fa-users-cog"></i>
+          <span class="nav-text">Gérer</span>
+        </button>
+
+        <button class="nav-btn role-admin" data-tab="creer">
+          <i class="fas fa-user-plus"></i>
+          <span class="nav-text">Créer</span>
+        </button>
+      </div>
     </div>
-
-
-
-    <div class="nav-links">
-    <button class="nav-btn" data-tab="securite">
-        <i class="fas fa-lock"></i>
-        <span class="nav-text">Sécurité</span>
-    </button>
-
-    <button class="nav-btn" data-tab="energie">
-        <i class="fas fa-bolt"></i>
-        <span class="nav-text">Énergie</span>
-    </button>
-
-    <button class="nav-btn" data-tab="objets">
-        <i class="fas fa-lightbulb"></i>
-        <span class="nav-text">Objets</span>
-    </button>
-
-    <button class="nav-btn" data-tab="pieces">
-        <i class="fas fa-house"></i>
-        <span class="nav-text">Pièces</span>
-    </button>
-
-    <button class="nav-btn" data-tab="utilisateurs">
-        <i class="fas fa-users-cog"></i>
-        <span class="nav-text">Gérer</span>
-    </button>
-
-    <button class="nav-btn" data-tab="creer">
-        <i class="fas fa-user-plus"></i>
-        <span class="nav-text">Créer</span>
-    </button>
-    </div>
-
-      
-      
   </nav>
 
-  <!-- Contenu principal -->
+  <!-- ########################################## CONTENU PRINCIPAL ########################################## -->
   <main class="admin-container">
 
-    <!-- Onglet Sécurité -->
+    <!-- Sécurité -->
     <section id="securite" class="tab-section hidden">
       <h2><i class="fas fa-lock"></i> Sécurité</h2>
       <p>Gérez l'état des portes, fenêtres et l'alarme de votre maison.</p>
+
       <div class="button-container">
-    <button class="nav-btn" data-tab="portes">
-        <i class="fas fa-door-closed"></i>
-        <span class="nav-text">Portes</span>
-    </button>
 
-    <button class="nav-btn" data-tab="fenetres">
-        <i class="fas fa-border-all"></i>
-        <span class="nav-text">Fenêtres</span>
-    </button>
+        <button class="btn2" data-tab="portes">
+            <i class="fas fa-door-closed"></i>
+            <span class="btn2-text">Portes</span>
+        </button>
+    
+        <button class="btn2" data-tab="fenetres">
+            <i class="fas fa-border-all"></i>
+            <span class="btn2-text">Fenêtres</span>
+        </button>
+    
+        <button class="btn2" data-tab="alarme">
+          <i class="fas fa-bell"></i>
+          <span class="btn2-text">Alarme</span>
+        </button>
 
-    <button class="nav-btn" data-tab="alarme">
-      <i class="fas fa-bell"></i>
-      <span class="nav-text">Alarme</span>
-  </button>
-  </div>
-
+      </div>
 
     </section>
 
-    <!-- Onglet Énergie -->
+    <!-- Énergie -->
     <section id="energie" class="tab-section hidden">
       <h2><i class="fas fa-bolt"></i> Énergie</h2>
       <p>Surveillez la consommation et production électrique de votre maison.</p>
     </section>
 
-    <!-- Onglet Objets Connectés -->
+    <!-- Objets connectés -->
     <section id="objets" class="tab-section hidden">
       <h2><i class="fas fa-lightbulb"></i> Objets Connectés</h2>
       <p>Contrôlez vos lampes, enceintes et autres appareils connectés.</p>
     </section>
 
-    <!-- Onglet Pièces -->
+    <!-- Pièces -->
     <section id="pieces" class="tab-section hidden">
       <h2><i class="fas fa-house"></i> Pièces</h2>
       <p>Gérez les pièces de votre maison et les objets associés.</p>
     </section>
 
-    <!-- Onglet Gérer utilisateurs -->
+    <!-- Gérer utilisateurs -->
     <section id="utilisateurs" class="tab-section hidden">
       <h2><i class="fas fa-users-cog"></i> Gérer utilisateurs</h2>
-      <p>Liste des utilisateurs à gérer (à remplir plus tard)...</p>
+      <p>Liste des utilisateurs à gérer...</p>
     </section>
 
-    <!-- Onglet Créer utilisateur -->
+    <!-- Créer utilisateur -->
     <section id="creer" class="tab-section hidden">
       <h2><i class="fas fa-user-plus"></i> Créer un nouvel utilisateur</h2>
       <form action="#" method="POST" class="form">
@@ -120,22 +114,18 @@
           <label for="prenom">Prénom</label>
           <input type="text" id="prenom" name="prenom" required />
         </div>
-
         <div class="form-group">
           <label for="nom">Nom</label>
           <input type="text" id="nom" name="nom" required />
         </div>
-
         <div class="form-group">
           <label for="email">Email</label>
           <input type="email" id="email" name="email" required />
         </div>
-
         <div class="form-group">
           <label for="password">Mot de passe</label>
           <input type="password" id="password" name="password" required />
         </div>
-
         <div class="form-group">
           <label for="profil">Type de profil</label>
           <select id="profil" name="profil" required>
@@ -145,24 +135,20 @@
             <option value="invite">Invité</option>
           </select>
         </div>
-
         <button type="submit" class="btn">Créer le compte</button>
       </form>
     </section>
 
   </main>
 
-  <!-- Script JS pour gérer les onglets -->
+  <!-- ########################################## SCRIPT ONGLET ########################################## -->
   <script>
     const navButtons = document.querySelectorAll('.nav-btn');
     const tabs = document.querySelectorAll('.tab-section');
 
     navButtons.forEach(button => {
       button.addEventListener('click', () => {
-        // Masquer tous les onglets
         tabs.forEach(tab => tab.classList.add('hidden'));
-
-        // Afficher l'onglet cliqué
         const targetTab = document.getElementById(button.dataset.tab);
         targetTab.classList.remove('hidden');
         targetTab.classList.add('fade-in');
@@ -171,5 +157,4 @@
   </script>
 
 </body>
-
 </html>
