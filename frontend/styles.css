@@ -10,7 +10,16 @@
     background: linear-gradient(90deg, #FFFDF0 0%, #B29BEB 100%);
     font-family: 'Inter', sans-serif;
     color: #4C5561;
-    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .container {
+    max-width: 600px;
+    text-align: left;
+    padding: 20px;
   }
   
   h1 {
@@ -46,60 +55,6 @@
     color: #111;
   }
   
-  .btn2 {
-    width: 100px;
-    height: 90px;
-    border-radius: 40px;
-    background-color: #FFFDF0;
-    color: #4C5561;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    position: relative;
-    transform: scale(1);
-  }
-  
-  .btn2 i {
-    font-size: 22px;
-    color: #4C5561;
-    transition: transform 0.3s ease, color 0.3s ease;
-  }
-  
-  .btn2-text {
-    color: #4C5561;
-    font-size: 1rem;
-    font-weight: bold;
-    transition: transform 0.3s ease, color 0.3s ease;
-  }
-  
-  .btn2:hover {
-    background-color: #FFFDF0;
-    transform: translateY(-5px);
-    box-shadow: 0 0 12px rgba(178, 155, 235, 0.5);
-  }
-  
-  .btn2:hover i {
-    transform: rotate(12deg) scale(1.1);
-    color: #B29BEB;
-  }
-  
-  .btn2:hover .btn2-text {
-    color: #B29BEB;
-  }
-
-  .btn2.active {
-    background-color: #FFFDF0;
-  }
-  
-  .btn2.active i,
-  .btn2.active .btn2-text {
-    color: #B29BEB;
-  }
   
   /* ########################################## NAVBAR ########################################## */
   
@@ -125,7 +80,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 30px;
   }
   
   .logo {
@@ -145,10 +99,10 @@
     display: flex;
     gap: 20px;
   }
-  
+
   .nav-btn {
     width: 60px;
-    height: 60px;
+    height: 60px; 
     border-radius: 24px;
     background-color: #FFFDF0;
     color: rgba(76, 85, 97, 0.8);
@@ -172,7 +126,7 @@
   
   .nav-text {
     color: #4C5561;
-    font-size: 0.80rem;
+    font-size: 0.75rem;
     font-weight: bold;
     transition: transform 0.3s ease, color 0.3s ease;
   }
@@ -187,39 +141,45 @@
     color: #FFFDF0;
   }
   
-  .button-container {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-  }
   
+
+  .nav-container {
+  gap: 30px; /* Ajoute un bel espace entre logo et liens */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center; /* Centre horizontalement */
+  gap: 20px; /* Espacement entre les boutons */
+}
+
   
-  /* ########################################## PROFIL CLASSES ########################################## */
+  /* --- PROFIL CLASSES --- */
+  /* Le back peut gérer ces classes dynamiquement */
   
-  .role-admin,
-  .role-parent,
-  .role-enfant,
-  .role-invite {
+  .parent-only,
+  .enfant-only,
+  .invite-only,
+  .admin-only {
     display: none;
   }
   
-  body.admin .role-admin,
-  body.admin .role-parent,
-  body.admin .role-enfant,
-  body.admin .role-invite {
+  body.parent .parent-only,
+  body.admin .parent-only {
     display: inline-block;
   }
   
-  body.parent .role-parent {
+  body.enfant .enfant-only,
+  body.admin .enfant-only {
     display: inline-block;
   }
   
-  body.enfant .role-enfant {
+  body.invite .invite-only,
+  body.admin .invite-only {
     display: inline-block;
   }
   
-  body.invite .role-invite {
+  body.admin .admin-only {
     display: inline-block;
   }
   
@@ -292,7 +252,18 @@
     font-size: 0.9rem;
   }
   
-  .form-group input,
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+  }
+  
+  .form-group input:focus {
+    border-color: #B29BEB;
+  }
+  
   .form-group select {
     width: 100%;
     padding: 10px;
@@ -301,7 +272,6 @@
     outline: none;
   }
   
-  .form-group input:focus,
   .form-group select:focus {
     border-color: #B29BEB;
   }
@@ -323,7 +293,7 @@
   
   /* ########################################## ADMIN PAGE ########################################## */
   
-  .container {
+  .admin-container {
     margin-top: 120px;
     max-width: 800px;
     margin-left: auto;
@@ -341,6 +311,7 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
   }
   
+  /* Sections des onglets */
   .tab-section {
     margin-top: 120px;
     padding: 20px;
@@ -351,24 +322,7 @@
     text-align: center;
   }
   
-  .sub-tab-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    margin-top: 40px;
-  }
-  
-  .sub-tab {
-    flex: 1 1 250px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-    text-align: center;
-  }
-  
+  /* Style plus petit pour le bouton dans navbar */
   .small-btn {
     padding: 10px 20px;
     border-radius: 20px;
@@ -395,83 +349,5 @@
       opacity: 1;
       transform: translateY(0);
     }
-  }
-
-
-  /* ########################################## Conteneur des switches ########################################## */
-
-  .item-list {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 25px; 
-  }
-  
-  .item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #FFFDF0; 
-    padding: 10px 15px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-  }
-  
-  .item-name {
-    font-weight: 500;
-    color: #4C5561;
-  }
-  
-  .item-actions {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  /* Switch reste pareil */
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 25px;
-  }
-  
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background-color: #ccc;
-    border-radius: 25px;
-    transition: 0.4s;
-  }
-  
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 18px;
-    width: 18px;
-    left: 4px;
-    bottom: 3.5px;
-    background-color: white;
-    border-radius: 50%;
-    transition: 0.4s;
-  }
-  
-  input:checked + .slider {
-    background-color: #B29BEB;
-  }
-  
-  input:checked + .slider:before {
-    transform: translateX(25px);
   }
   
