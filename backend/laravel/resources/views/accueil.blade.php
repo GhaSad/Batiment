@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Maison Connectée - Accueil</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
 </head>
 
 
@@ -51,7 +51,7 @@
           <input type="password" id="password" name="password" required />
         </div>
         <button type="submit" class="btn">Se connecter</button>
-        <p class="form-link">Pas encore de compte ? <a href="inscription.html">S'inscrire</a></p>
+        <p class="form-link">Pas encore de compte ? <a href="{{ route('register.form') }}">S'inscrire</a></p>
 
       </form>
     </div>
@@ -93,13 +93,5 @@
   
 
 </body>
-
-
-  
-  
-  
-  
-  
-  
 
 </html>
