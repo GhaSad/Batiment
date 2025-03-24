@@ -15,13 +15,14 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('username')->unique();
-            $table->int('age')->check('age > 0');
+            $table->integer('age')->check('age > 0');
             $table->enum('sexe',['male','femelle']);
             $table->string('date de naissance');
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['visiteur', 'simple', 'complexe', 'admin'])->default('visiteur');
             $table->string('photo')->nullable();
+            $table->foreignId('home_id')->constrained('homes')->onDelete('cascade');
             $table->timestamps();
         });
 

@@ -17,4 +17,8 @@ class EnergyUsage extends Model
     {
         return $this->belongsTo(Device::class);
     }
+
+    public function Home(){
+        return $this->belongsTo(Home::class);
+    }
 }

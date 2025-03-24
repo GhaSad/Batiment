@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('device_id')->constrained('devices')->onDelete('cascade');
             $table->float('consumption');
+            $table->foreignId('home_id')->constrained('homes')->onDelete('cascade');
             $table->timestamp('recorded_at')->nullable();
         });
     }

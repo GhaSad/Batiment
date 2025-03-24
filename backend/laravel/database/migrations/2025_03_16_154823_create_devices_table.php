@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('type',['thermostat','lumière','caméra','capteur','autre']);
             $table->enum('status',['actif','inactif']);
             //Clé etrangere
+            $table->foreignId('home_id')->constrained('homes')->onDelete('cascade');
             $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');
             $table->timestamps();
         });

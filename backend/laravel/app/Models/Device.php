@@ -24,4 +24,8 @@ class Device extends Model
     public function energyUsage(){
         return $this->hasMany(EnergyUsage::class);
     }
+
+    public function home(){
+        return $this->belongsTo(Home::class);
+    }
 }
