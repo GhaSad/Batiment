@@ -83,10 +83,21 @@
       <i class="fas fa-bell"></i>
       <span class="nav-text">Alarme</span>
   </button>
+
+  <button class="nav-btn" data-tab="garage">
+    <i class="fas fa-warehouse"></i>
+    <span class="nav-text">Garage</span>
+</button>
   </div>
-
-
     </section>
+
+    <!--gestion des portes-->
+     <div id="porte-section" class="hidden">
+            <h3>Gestion des Portes</h3>
+            <input type="number" id="porte-number">
+            <button onclick="ajouterPorte()">➕ Ajouter</button>
+            <ul id="liste-portes"></ul>
+        </div>
 
     <!-- Onglet Énergie -->
     <section id="energie" class="tab-section hidden">
@@ -155,19 +166,29 @@
   <!-- Script JS pour gérer les onglets -->
   <script>
     const navButtons = document.querySelectorAll('.nav-btn');
-    const tabs = document.querySelectorAll('.tab-section');
+const tabs = document.querySelectorAll('.tab-section');
+const porteSection = document.getElementById('porte-section');
 
-    navButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        // Masquer tous les onglets
-        tabs.forEach(tab => tab.classList.add('hidden'));
+navButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Masquer tous les onglets
+    tabs.forEach(tab => tab.classList.add('hidden'));
+    porteSection.classList.add('hidden'); // Masquer aussi la gestion des portes
 
-        // Afficher l'onglet cliqué
-        const targetTab = document.getElementById(button.dataset.tab);
-        targetTab.classList.remove('hidden');
-        targetTab.classList.add('fade-in');
-      });
-    });
+    // Afficher l'onglet cliqué
+    const targetTab = document.getElementById(button.dataset.tab);
+    if (targetTab) {
+      targetTab.classList.remove('hidden');
+      targetTab.classList.add('fade-in');
+    }
+
+    // Si c'est le bouton "Portes", afficher la gestion des portes
+    if (button.dataset.tab === "portes") {
+      porteSection.classList.remove('hidden');
+    }
+  });
+});
+
   </script>
 
 </body>
