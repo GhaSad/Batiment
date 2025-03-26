@@ -10,6 +10,7 @@
 </head>
 
 <body class="admin"> <!-- Dynamique: admin, parent, enfant, invite -->
+  
 
   <!-- ########################################## NAVBAR ########################################## -->
   <nav class="navbar-top">
@@ -185,7 +186,8 @@
   <!-- ########################################## Créer utilisateur ########################################## -->
     <section id="creer" class="tab-section hidden">
       <h2><i class="fas fa-user-plus"></i> Créer un nouvel utilisateur</h2>
-      <form action="#" method="POST" class="form">
+      <form action="{{ route('create.user') }}" method="POST" class="form">
+        @csrf
         <div class="form-group">
           <label for="prenom">Prénom</label>
           <input type="text" id="prenom" name="prenom" required />
@@ -199,21 +201,46 @@
           <input type="email" id="email" name="email" required />
         </div>
         <div class="form-group">
+          <label for="date_de_naissance">Date de naissance</label>
+          <input type="date" id="date_de_naissance" name="date_de_naissance" required/>
+        </div>
+
+        <div class="form-group">
+          <label for="sexe">Sexe</label>
+          <select id="sexe" name="sexe" required>
+            <option value="">-- Sélectionnez --</option>
+            <option value="homme">Homme</option>
+            <option value="femme">Femme</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+
+        <div class="form-group">
           <label for="password">Mot de passe</label>
           <input type="password" id="password" name="password" required />
         </div>
         <div class="form-group">
           <label for="profil">Type de profil</label>
-          <select id="profil" name="profil" required>
+          <select id="role" name="role">
             <option value="">-- Sélectionner --</option>
-            <option value="parent">Parent</option>
-            <option value="enfant">Enfant</option>
-            <option value="invite">Invité</option>
+            <option value="admin">Administrateur</option>
+            <option value="complexe">Parent</option>
+            <option value="simple">Enfant</option>
+            <option value="visiteur">Invité</option>
           </select>
         </div>
+        <div class="form-group">
+        <label for="home_id">Home Id</label>
+        <input type="text" id="home_id" name="home_id" required>
+      </div>
         <button type="submit" class="btn">Créer le compte</button>
       </form>
     </section>
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
   </main>
 

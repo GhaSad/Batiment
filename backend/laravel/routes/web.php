@@ -21,9 +21,7 @@ Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [UserController::class, 'register'])->name('register.submit');
 
 // Affichage de la page d'accueil (formulaire de connexion)
-Route::get('/accueil', function () {
-    return view('accueil');
-});
+Route::get('/accueil',[AuthController::class, 'showLoginForm'])->name('login.form');
 
 // Traitement du formulaire de connexion
 Route::post('/accueil', [AuthController::class, 'login'])->name('login');
@@ -31,7 +29,11 @@ Route::post('/accueil', [AuthController::class, 'login'])->name('login');
 // Route protégée pour la page d'accueil après connexion
 Route::get('/home', function () {
     return view('home');
-})->middleware('auth');  // Assurez-vous que l'utilisateur soit authentifié pour y accéder
+})->middleware('auth')->name('home');  // Assurez-vous que l'utilisateur soit authentifié pour y accéder
+
+// Route pour traiter la soumission du formulaire de création d'utilisateur
+Route::post('/create-user', [UserController::class, 'createUser'])->name('create.user');
+
 
 // Route API pour enregistrer des logs de sécurité (par exemple pour des actions de sécurité comme les portes, fenêtres, etc.)
 Route::post('/api/security/log', function (Request $request) {

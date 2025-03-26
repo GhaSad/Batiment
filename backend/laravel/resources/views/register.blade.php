@@ -8,9 +8,10 @@
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
 </head>
 
-<body class="bg-gradient-to-r from-gray-100 to-purple-300 flex flex-col items-center justify-center h-screen">
+<body class="bg-gradient-to-r from-gray-100 to-purple-300 h-screen">
 
-  <div class="modal-content">
+<div class="modal">
+<div class="modal-content">
     <h2>Créer un compte</h2>
 
     <!-- Formulaire d'inscription, action dirigée vers la route Laravel -->
@@ -35,6 +36,21 @@
       </div>
 
       <div class="form-group">
+          <label for="date_de_naissance">Date de naissance</label>
+          <input type="date" id="date_de_naissance" name="date_de_naissance" required/>
+        </div>
+
+        <div class="form-group">
+          <label for="sexe">Sexe</label>
+          <select id="sexe" name="sexe" required>
+            <option value="">-- Sélectionnez --</option>
+            <option value="homme">Homme</option>
+            <option value="femme">Femme</option>
+            <option value="autre">Autre</option>
+          </select>
+        </div>
+
+      <div class="form-group">
         <label for="password">Mot de passe</label>
         <input type="password" id="password" name="password" required />
       </div>
@@ -44,11 +60,30 @@
         <input type="password" id="password_confirmation" name="password_confirmation" required />
       </div>
 
+      <div class="form-group">
+        <label for="home_id">Home Id</label>
+        <input type="text" id="home_id" name="home_id" required>
+      </div>
+
+      <div class="form-group">
+          <label for="profil">Type de profil</label>
+          <select id="role" name="role" >
+            <option value="">-- Sélectionner --</option>
+            <option value="admin">Administrateur</option>
+            <option value="complexe">Parent</option>
+            <option value="simple">Enfant</option>
+            <option value="visiteur">Invité</option>
+          </select>
+        </div>
+
       <button type="submit" class="btn">S'inscrire</button>
 
       <p class="form-link">Déjà inscrit ? <a href="accueil.html?openModal=true">Se connecter</a></p>
     </form>
   </div>
+</div>  
+
+
   @if ($errors->any())
     <div class="alert alert-danger">
         <ul>

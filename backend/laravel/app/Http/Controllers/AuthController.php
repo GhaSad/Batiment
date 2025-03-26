@@ -14,13 +14,22 @@ class AuthController extends Controller
     }
 
     // Méthode pour traiter la soumission du formulaire de connexion
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('home');
-        }
-        
-        return back()->withErrors(['email' => 'Les identifiants sont incorrects']);
+public function login(Request $request)
+{
+    // Validation des entrées
+    $validated = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:6',
+    ]);
+
+    // Authentification
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        return redirect()->route('home');
+    }else {
+        return back()->withErrors(['email' => 'Les identifiants sont incorrects.']);
     }
+}
+
 }
