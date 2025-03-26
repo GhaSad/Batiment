@@ -19,6 +19,11 @@
         <span class="logo-text">Maison Connectée</span>
       </div>
 
+      <div class="search-container">
+        <input type="text" id="search-bar" placeholder="Rechercher...">
+        <div class="suggestions hidden"></div>
+      </div>
+
       <div class="nav-links">
         <button class="nav-btn role-admin role-parent role-enfant" data-tab="securite">
           <i class="fas fa-lock"></i>
