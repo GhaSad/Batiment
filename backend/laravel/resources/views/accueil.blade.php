@@ -41,19 +41,26 @@
       <button id="closeModal" class="modal-close">&times;</button>
       <h2>Connexion</h2>
 
-      <form action="#" method="POST" class="form">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required />
-        </div>
-        <div class="form-group">
-          <label for="password">Mot de passe</label>
-          <input type="password" id="password" name="password" required />
-        </div>
-        <button type="submit" class="btn">Se connecter</button>
-        <p class="form-link">Pas encore de compte ? <a href="{{ route('register.form') }}">S'inscrire</a></p>
+      <form action="{{ route('login') }}" method="POST" class="form">
+    @csrf <!-- Ceci génère un token CSRF -->
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" value="{{ old('email') }}" required />
+        @error('email') 
+            <div class="error">{{ $message }}</div>
+        @enderror
+    </div>
+    <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input type="password" id="password" name="password" required />
+        @error('password') 
+            <div class="error">{{ $message }}</div>
+        @enderror
+    </div>
+    <button type="submit" class="btn">Se connecter</button>
+    <p class="form-link">Pas encore de compte ? <a href="{{ route('register.form') }}">S'inscrire</a></p>
+</form>
 
-      </form>
     </div>
   </div>
 
