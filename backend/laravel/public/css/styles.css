@@ -525,3 +525,38 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(25px);
 }
+
+/* ########################################## Modal Ajout ########################################## */
+
+.modal-close {
+  margin-top: 10px;
+  background-color: transparent;
+  border: none;
+  color: #B29BEB;
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: underline;
+  display: inline-block;
+}
+
+.modal-close:hover {
+  color: #7A5DD5;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-content form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* Ajuste l’espace entre les éléments */
+}
+
+.modal-content h2 {
+  font-size: 1.4rem; /* Réduit la taille */
+  margin-bottom: 10px;
+}

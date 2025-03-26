@@ -107,7 +107,8 @@
       </div>
     
       <!-- Bouton Ajouter -->
-      <button class="btn small-btn role-admin">Ajouter une porte</button>
+      <button class="btn small-btn role-admin btn-ajouter-porte" onclick="ouvrirModal('porte')">Ajouter une porte</button>
+
     </section>
 
     <section id="fenetres-section" class="sub-tab hidden">
@@ -138,7 +139,7 @@
       </div>
     
       <!-- Bouton Ajouter -->
-      <button class="btn small-btn role-admin">Ajouter une fenêtre</button>
+      <button class="btn small-btn role-admin" onclick="ouvrirModal('fenetre')">Ajouter une fenêtre</button>
     </section>
 
     <section id="alarme-section" class="sub-tab hidden">
@@ -158,9 +159,38 @@
       </div>
     
       <!-- Bouton Ajouter -->
-      <button class="btn small-btn role-admin">Ajouter une alarme</button>
+      <button class="btn small-btn role-admin btn-ajouter-alarme" onclick="ouvrirModal('alarme')">Ajouter une alarme</button>
+
     </section>
 
+  </div>
+
+<!-- ########################################## Formulaire ajout ########################################## -->
+
+  <div id="modal-ajout-objet" class="modal hidden">
+  <div class="modal-content">
+  <h2 id="modal-title">Ajouter une fenêtre</h2>
+    <form id="ajoutObjetForm">
+      <div class="form-group">
+        <label for="objet-nom">Nom</label>
+        <input type="text" id="objet-nom" name="nom" required>
+      </div>
+
+      <div class="form-group">
+        <label for="objet-piece">Pièce</label>
+        <select id="objet-piece" name="piece_id">
+        <option value="">-- Aucune pièce --</option>
+          <!-- Options générées dynamiquement via JS -->
+        </select>
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="btn">Ajouter</button>
+        <button type="button" class="modal-close">Annuler</button>
+      </div>
+
+      </form>
+  </div>
   </div>
 
   <!-- ########################################## Énergie ########################################## -->

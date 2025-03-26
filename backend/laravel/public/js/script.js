@@ -161,3 +161,44 @@ function highlightItem(itemName) {
     }
   });
 }
+
+//modal ajout fenêtre
+
+function ouvrirModal(type) {
+  const modal = document.getElementById('modal-ajout-objet');
+  const title = document.getElementById('modal-title');
+  const form = document.getElementById('ajoutObjetForm');
+
+  modal.classList.remove('hidden');
+
+  // Changer le titre
+  if (type === 'porte') {
+    title.textContent = 'Ajouter une porte';
+  } else if (type === 'alarme') {
+    title.textContent = 'Ajouter une alarme';
+  } else {
+    title.textContent = 'Ajouter une fenêtre';
+  }
+
+  // Marquer dans le formulaire quel type d'objet est ajouté
+  form.dataset.type = type;
+}
+
+
+fetch('/api/pieces')
+  .then(res => res.json())
+  .then(data => {
+    const select = document.getElementById('objet-piece');
+    data.forEach(piece => {
+      const option = document.createElement('option');
+      option.value = piece.id;
+      option.textContent = piece.nom;
+      select.appendChild(option);
+    });
+  })
+  .catch(err => console.error('Erreur chargement pièces :', err));
+
+  // Fermer modal avec "Annuler"
+document.querySelector('.modal-close').addEventListener('click', () => {
+  document.getElementById('modal-ajout-objet').classList.add('hidden');
+});
