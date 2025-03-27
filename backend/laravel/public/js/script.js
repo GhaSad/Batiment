@@ -185,7 +185,7 @@ function ouvrirModal(type) {
 }
 
 
-fetch('/api/pieces')
+fetch('/api/rooms')
   .then(res => res.json())
   .then(data => {
     const select = document.getElementById('objet-piece');

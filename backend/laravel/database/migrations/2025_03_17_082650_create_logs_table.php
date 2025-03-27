@@ -13,8 +13,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('device_id')->constrained('devices')->onDelete('cascade');
-            $table->foreignId('user_action_id')->constrained('users_actions')->onDelete('cascade');
             $table->string('log_message');
+            $table->enum('status',['actif','inactif']);
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
         });        

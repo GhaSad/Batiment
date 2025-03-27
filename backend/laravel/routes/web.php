@@ -4,7 +4,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AuthController;  // N'oublie pas d'importer ce contrôleur
 use App\Models\Device;
-use App\Models\Log;
+use App\Models\Logs;
+use App\Models\Room;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -27,12 +28,19 @@ Route::get('/accueil',[AuthController::class, 'showLoginForm'])->name('login.for
 Route::post('/accueil', [AuthController::class, 'login'])->name('login');
 
 // Route protégée pour la page d'accueil après connexion
-Route::get('/home', function () {
-    return view('home');
-})->middleware('auth')->name('home');  // Assurez-vous que l'utilisateur soit authentifié pour y accéder
+Route::get('/home', [DeviceController::class, 'index'])->middleware('auth')->name('home');
+
 
 // Route pour traiter la soumission du formulaire de création d'utilisateur
 Route::post('/create-user', [UserController::class, 'createUser'])->name('create.user');
+
+Route::post('/create-device', [DeviceController::class, 'store'])->name('create-device');
+
+// Définir une route API pour récupérer les pièces
+Route::get('/api/rooms', function () {
+    $rooms = App\Models\Room::all();  // Récupérer toutes les pièces dans la base de données
+    return response()->json($rooms);  // Retourner les données au format JSON
+});
 
 
 // Route API pour enregistrer des logs de sécurité (par exemple pour des actions de sécurité comme les portes, fenêtres, etc.)
@@ -62,5 +70,7 @@ Route::post('/api/security/log', function (Request $request) {
 
 // Utiliser une ressource pour gérer les dispositifs
 Route::resource('devices', DeviceController::class);
+
+Route::post('/add-object', [DeviceController::class, 'store'])->name('device-add');
 
 ?>

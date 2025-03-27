@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('devices', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('type',['thermostat','lumière','caméra','capteur','autre']);
+            $table->enum('type',['porte','fenetre','alarme']);
             $table->enum('status',['actif','inactif']);
             //Clé etrangere
             $table->foreignId('home_id')->constrained('homes')->onDelete('cascade');

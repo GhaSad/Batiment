@@ -168,31 +168,37 @@
 
 <!-- ########################################## Formulaire ajout ########################################## -->
 
-  <div id="modal-ajout-objet" class="modal hidden">
+<div id="modal-ajout-objet" class="modal hidden">
   <div class="modal-content">
-  <h2 id="modal-title">Ajouter une fenêtre</h2>
-    <form id="ajoutObjetForm">
-      <div class="form-group">
-        <label for="objet-nom">Nom</label>
-        <input type="text" id="objet-nom" name="nom" required>
-      </div>
-
-      <div class="form-group">
-        <label for="objet-piece">Pièce</label>
-        <select id="objet-piece" name="piece_id">
-        <option value="">-- Aucune pièce --</option>
-          <!-- Options générées dynamiquement via JS -->
-        </select>
-      </div>
-
-      <div class="modal-actions">
-        <button type="submit" class="btn">Ajouter</button>
-        <button type="button" class="modal-close">Annuler</button>
-      </div>
-
-      </form>
+    <h2 id="modal-title">Ajouter une fenêtre</h2>
+    <form id="ajoutObjetForm" method="POST" action="{{ route('create-device') }}">
+  @csrf
+  <div class="form-group">
+    <label for="objet-nom">Nom</label>
+    <input type="text" id="objet-nom" name="nom" required>
   </div>
+
+  <div class="form-group">
+    <label for="objet-piece">Pièce</label>
+    <select id="objet-piece" name="piece_id">
+      <option value="">-- Aucune pièce --</option>
+      <!-- Options générées dynamiquement via JS -->
+      @foreach ($rooms as $room)
+        <option value="{{ $room->id }}">{{ $room->name }}</option> <!-- Affichage du nom -->
+      @endforeach
+    </select>
   </div>
+
+  <input type="hidden" id="objet-type" name="type" value="fenetre"> <!-- Dynamically change the type -->
+
+  <div class="modal-actions">
+    <button type="submit" class="btn">Ajouter</button>
+    <button type="button" class="modal-close">Annuler</button>
+  </div>
+</form>
+
+  </div>
+</div>
 
   <!-- ########################################## Énergie ########################################## -->
     <section id="energie" class="tab-section hidden">
@@ -281,6 +287,38 @@
 
   <!-- ########################################## SCRIPT ########################################## -->
   <script src="{{ asset('js/script.js') }}"></script>
+  <script>
+  function ouvrirModal(type) {
+    // Ouvrir le modal
+    const modal = document.getElementById('modal-ajout-objet');
+    const modalTitle = document.getElementById('modal-title');
+    const objetTypeInput = document.getElementById('objet-type');
+    const objetNomInput = document.getElementById('objet-nom');
+
+    // Adapter le formulaire en fonction du type d'objet
+    if (type === 'porte') {
+      modalTitle.textContent = 'Ajouter une porte';
+      objetTypeInput.value = 'porte';
+    } else if (type === 'fenetre') {
+      modalTitle.textContent = 'Ajouter une fenêtre';
+      objetTypeInput.value = 'fenetre';
+    } else if (type === 'alarme') {
+      modalTitle.textContent = 'Ajouter une alarme';
+      objetTypeInput.value = 'alarme';
+    }
+
+    // Ouvrir le modal
+    modal.classList.remove('hidden');
+  }
+
+  // Fermeture du modal
+  document.querySelectorAll('.modal-close').forEach(button => {
+    button.addEventListener('click', () => {
+      document.getElementById('modal-ajout-objet').classList.add('hidden');
+    });
+  });
+</script>
+
 
 </body>
 

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->integer('age')->check('age > 0');
             $table->enum('sexe',['homme','femelle','autre']);
-            $table->string('date de naissance');
+            $table->date('date_de_naissance');
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['visiteur', 'simple', 'complexe', 'admin'])->default('visiteur');
