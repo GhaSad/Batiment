@@ -312,3 +312,58 @@ pieces.forEach(piece => {
 
   conteneurOnglets.appendChild(onglet);
 });
+
+//########################################## Objets  ##########################################
+
+const suggestions = {
+  lumiere: "Lumière du salon",
+  tele: "Télé du séjour",
+  enceinte: "Enceinte Bluetooth",
+  appareil: "Cafetière",
+  aspirateur: "Robot aspirateur",
+  tondeuse: "Robot tondeuse",
+  prise: "Prise connectée",
+  arrosage: "Arrosage jardin",
+  thermostat: "Thermostat principal",
+  volet: "Volet chambre",
+  serrure: "Serrure entrée",
+  lave_linge: "Lave-linge",
+  lave_vaisselle: "Lave-vaisselle",
+  four: "Four connecté",
+  autre: ""
+};
+
+// Suggestion automatique de nom
+document.getElementById('type-objet').addEventListener('change', e => {
+  const valeur = e.target.value;
+  document.getElementById('nom-objet').value = suggestions[valeur] || '';
+});
+
+// Remplir la liste des pièces dynamiquement (depuis BDD ou JS temporaire)
+fetch('/api/rooms')
+  .then(res => res.json())
+  .then(data => {
+    const select = document.getElementById('objet-piece');
+    select.innerHTML = "";
+    data.forEach(piece => {
+      const opt = document.createElement('option');
+      opt.value = piece.id;
+      opt.textContent = piece.nom;
+      select.appendChild(opt);
+    });
+  });
+
+// Ouvrir / Fermer le modal
+function ouvrirModalObjet() {
+  document.getElementById('modal-ajout-objet-connecte').classList.remove('hidden');
+  document.getElementById('modal-overlay').classList.remove('hidden');
+  document.querySelector('.navbar-top').classList.add('modal-open');
+}
+
+document.querySelectorAll('#modal-ajout-objet-connecte .modal-close').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('modal-ajout-objet-connecte').classList.add('hidden');
+    document.getElementById('modal-overlay').classList.add('hidden');
+    document.querySelector('.navbar-top').classList.remove('modal-open');
+  });
+});

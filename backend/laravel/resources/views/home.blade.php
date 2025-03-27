@@ -213,12 +213,80 @@
     </section>
 
 <!-- ########################################## Objets connectés ########################################## -->
-    <section id="objets" class="tab-section hidden">
-      <h2><i class="fas fa-lightbulb"></i> Objets Connectés</h2>
-      <p>Contrôlez vos lampes, enceintes et autres appareils connectés.</p>
-    </section>
+    <!-- SECTION OBJETS CONNECTÉS -->
+<section id="objets" class="tab-section hidden">
+  <h2><i class="fas fa-lightbulb"></i> Objets Connectés</h2>
+  <p>Contrôlez vos lumières, enceintes et autres appareils connectés.</p>
+
+  <!-- Liste dynamique des objets connectés -->
+  <div id="liste-objets" class="sub-tab-container">
+    <!-- Objets générés dynamiquement via JS -->
+  </div>
+
+  <!-- Bouton pour ouvrir le modal d'ajout -->
+  <button class="btn" onclick="ouvrirModalObjet()">Ajouter un objet</button>
+</section>
+
+<!-- MODAL OVERLAY (en dehors de toute section) -->
+<div id="modal-overlay" class="modal-overlay hidden"></div>
+
+<!-- MODAL AJOUT OBJET CONNECTÉ (placer en bas de la page) -->
+<div id="modal-ajout-objet-connecte" class="modal hidden">
+  <div class="modal-content">
+    <h2>Ajouter un objet connecté</h2>
+    <form id="form-ajout-objet-connecte">
+
+      <!-- Type d'objet -->
+      <div class="form-group">
+        <label for="type-objet">Type d’objet</label>
+        <select id="type-objet" required>
+          <option value="">-- Choisir --</option>
+          <option value="lumiere">💡 Lumière</option>
+          <option value="tele">📺 Télé</option>
+          <option value="enceinte">🔊 Enceinte</option>
+          <option value="appareil">🍽️ Appareil ménager</option>
+          <option value="aspirateur">🤖 Robot aspirateur</option>
+          <option value="tondeuse">🤖 Robot tondeuse</option>
+          <option value="prise">🔌 Prise connectée</option>
+          <option value="arrosage">💧 Arrosage auto.</option>
+          <option value="thermostat">🌡️ Thermostat</option>
+          <option value="volet">🪟 Volets roulants</option>
+          <option value="serrure">🔒 Serrure connectée</option>
+          <option value="lave_linge">🮚 Lave-linge / sèche-linge</option>
+          <option value="lave_vaisselle">🍽️ Lave-vaisselle</option>
+          <option value="four">🔥 Four</option>
+          <option value="autre">🔧 Autre</option>
+        </select>
+      </div>
+
+      <!-- Nom de l'objet -->
+      <div class="form-group">
+        <label for="nom-objet">Nom de l’objet</label>
+        <input type="text" id="nom-objet" placeholder="Ex: Lumière du salon" required />
+      </div>
+
+      <!-- Pièce -->
+      <div class="form-group">
+        <label for="objet-piece">Pièce</label>
+        <select id="objet-piece" required>
+          <!-- Dynamique via JS -->
+        </select>
+      </div>
+
+      <!-- Actions -->
+      <div class="modal-actions">
+        <button type="submit" class="btn">Ajouter</button>
+        <button type="button" class="modal-close">Annuler</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+
 
 <!-- ########################################## Pièces ########################################## -->
+  
   <section id="pieces" class="tab-section hidden">
     <h2><i class="fas fa-house"></i> Pièces</h2>
     <p>Gérez les pièces de votre maison et les objets associés.</p>
@@ -238,7 +306,7 @@
     <!-- ########################################## Overlay flouté -->
 
     <div id="modal-overlay" class="modal-overlay hidden"></div>
-    
+
   <div id="modal-ajout-piece" class="modal hidden">
   <div class="modal-content">
     <h2>Ajouter une pièce</h2>
@@ -251,7 +319,7 @@
       <button type="button" class="modal-close">Annuler</button>
     </form>
   </div>
-</div>
+  </div>  
 
 <!-- ########################################## Gérer utilisateurs ########################################## -->
     <section id="utilisateurs" class="tab-section hidden">
@@ -316,7 +384,7 @@
     <div class="alert alert-success">
         {{ session('success') }}
     </div>
-@endif
+  @endif
 
   </main>
 
