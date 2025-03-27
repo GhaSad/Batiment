@@ -12,7 +12,7 @@
 <body class="admin"> <!-- Dynamique: admin, parent, enfant, invite -->
   
 
-  <!-- ########################################## NAVBAR ########################################## -->
+<!-- ########################################## NAVBAR ########################################## -->
   <nav class="navbar-top">
     <div class="nav-container">
       <div class="logo">
@@ -62,7 +62,7 @@
   <!-- ########################################## CONTENU PRINCIPAL ########################################## -->
   <main class="container">
 
-  <!-- ########################################## Sécurité ########################################## -->
+<!-- ########################################## Sécurité ########################################## -->
 
   <section id="securite" class="tab-section hidden">
     <h2><i class="fas fa-lock"></i> Sécurité</h2>
@@ -88,7 +88,7 @@
 
   <!----------------------------------------- SOUS-ONGLETS ----------------------------------------->
 
-  <div class="sub-tab-container">
+    <div class="sub-tab-container">
 
     <section id="portes-section" class="sub-tab hidden">
       <h3>Portes</h3>
@@ -164,73 +164,99 @@
 
     </section>
 
-  </div>
+    </div>
 
-<!-- ########################################## Formulaire ajout ########################################## -->
+  <!-- ########################################## Ajouter ########################################## -->
 
-<!-- ########################################## Overlay flouté -->
+    <!-- ########################################## Overlay flouté -->
 
-<div id="modal-overlay" class="modal-overlay hidden"></div>
+    <div id="modal-overlay" class="modal-overlay hidden"></div>
 
-<!-- ########################################## Formulaire ajout -->
+    <!-- ########################################## Formulaire  -->
 
-<div id="modal-ajout-objet" class="modal hidden">
-  <div class="modal-content">
-    <h2 id="modal-title">Ajouter une fenêtre</h2>
-    <form id="ajoutObjetForm" method="POST" action="{{ route('create-device') }}">
-  @csrf
-  <div class="form-group">
-    <label for="objet-nom">Nom</label>
-    <input type="text" id="objet-nom" name="nom" required>
-  </div>
+    <div id="modal-ajout-objet" class="modal hidden">
+      <div class="modal-content">
+        <h2 id="modal-title">Ajouter une fenêtre</h2>
+        <form id="ajoutObjetForm" method="POST" action="{{ route('create-device') }}">
+      @csrf
+      <div class="form-group">
+        <label for="objet-nom">Nom</label>
+        <input type="text" id="objet-nom" name="nom" required>
+      </div>
 
-  <div class="form-group">
-    <label for="objet-piece">Pièce</label>
-    <select id="objet-piece" name="piece_id">
-      <option value="">-- Aucune pièce --</option>
-      <!-- Options générées dynamiquement via JS -->
-      @foreach ($rooms as $room)
-        <option value="{{ $room->id }}">{{ $room->name }}</option> <!-- Affichage du nom -->
-      @endforeach
-    </select>
-  </div>
+      <div class="form-group">
+        <label for="objet-piece">Pièce</label>
+        <select id="objet-piece" name="piece_id">
+          <option value="">-- Aucune pièce --</option>
+          <!-- Options générées dynamiquement via JS -->
+          @foreach ($rooms as $room)
+            <option value="{{ $room->id }}">{{ $room->name }}</option> <!-- Affichage du nom -->
+          @endforeach
+        </select>
+      </div>
 
-  <input type="hidden" id="objet-type" name="type" value="fenetre"> <!-- Dynamically change the type -->
+      <input type="hidden" id="objet-type" name="type" value="fenetre"> <!-- Dynamically change the type -->
 
-  <div class="modal-actions">
-    <button type="submit" class="btn">Ajouter</button>
-    <button type="button" class="modal-close">Annuler</button>
-  </div>
-</form>
+      <div class="modal-actions">
+        <button type="submit" class="btn">Ajouter</button>
+        <button type="button" class="modal-close">Annuler</button>
+      </div>
+    </form>
 
-  </div>
-</div>
+      </div>
+    </div>
 
-  <!-- ########################################## Énergie ########################################## -->
+<!-- ########################################## Énergie ########################################## -->
     <section id="energie" class="tab-section hidden">
       <h2><i class="fas fa-bolt"></i> Énergie</h2>
       <p>Surveillez la consommation et production électrique de votre maison.</p>
     </section>
 
-  <!-- ########################################## Objets connectés ########################################## -->
+<!-- ########################################## Objets connectés ########################################## -->
     <section id="objets" class="tab-section hidden">
       <h2><i class="fas fa-lightbulb"></i> Objets Connectés</h2>
       <p>Contrôlez vos lampes, enceintes et autres appareils connectés.</p>
     </section>
 
-  <!-- ########################################## Pièces ########################################## -->
-    <section id="pieces" class="tab-section hidden">
-      <h2><i class="fas fa-house"></i> Pièces</h2>
-      <p>Gérez les pièces de votre maison et les objets associés.</p>
-    </section>
+<!-- ########################################## Pièces ########################################## -->
+  <section id="pieces" class="tab-section hidden">
+    <h2><i class="fas fa-house"></i> Pièces</h2>
+    <p>Gérez les pièces de votre maison et les objets associés.</p>
 
-  <!-- ########################################## Gérer utilisateurs ########################################## -->
+    <div class="button-container" id="liste-pieces">
+      <!-- Boutons pièces générés dynamiquement ici -->
+    </div>
+
+    <button class="btn small-btn role-admin" id="btn-ajouter-piece" onclick="ouvrirModalPiece()">Ajouter une pièce</button>
+  </section>
+
+  <div class="sub-tab-container" id="onglets-pieces">
+  <!-- Les sous-onglets des pièces apparaîtront ici -->
+  </div>
+
+  <!-- ########################################## Modal ########################################## -->
+
+  <div id="modal-ajout-piece" class="modal hidden">
+  <div class="modal-content">
+    <h2>Ajouter une pièce</h2>
+    <form id="form-ajout-piece">
+      <div class="form-group">
+        <label for="nom-piece">Nom de la pièce</label>
+        <input type="text" id="nom-piece" name="nom" required>
+      </div>
+      <button type="submit" class="btn">Ajouter</button>
+      <button type="button" class="modal-close">Annuler</button>
+    </form>
+  </div>
+</div>
+
+<!-- ########################################## Gérer utilisateurs ########################################## -->
     <section id="utilisateurs" class="tab-section hidden">
       <h2><i class="fas fa-users-cog"></i> Gérer utilisateurs</h2>
       <p>Liste des utilisateurs à gérer...</p>
     </section>
 
-  <!-- ########################################## Créer utilisateur ########################################## -->
+<!-- ########################################## Créer utilisateur ########################################## -->
     <section id="creer" class="tab-section hidden">
       <h2><i class="fas fa-user-plus"></i> Créer un nouvel utilisateur</h2>
       <form action="{{ route('create.user') }}" method="POST" class="form">
@@ -291,7 +317,8 @@
 
   </main>
 
-  <!-- ########################################## SCRIPT ########################################## -->
+<!-- ########################################## SCRIPT ########################################## -->
+
 
   <script src="{{ asset('js/script.js') }}"></script>
 

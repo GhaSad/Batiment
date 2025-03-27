@@ -162,7 +162,7 @@ function highlightItem(itemName) {
   });
 }
 
-//########################################## modal ajout fenêtre ##########################################
+//########################################## modal ajout  ##########################################
 
 function ouvrirModal(type) {
   document.getElementById('modal-overlay').classList.remove('hidden');
@@ -210,4 +210,103 @@ document.querySelectorAll('.modal-close').forEach(btn => {
   });
 });
 
+//########################################## Pièces  ##########################################
 
+function ouvrirModalPiece() {
+  document.getElementById('modal-ajout-piece').classList.remove('hidden');
+  document.querySelector('.navbar-top').classList.add('modal-open');
+}
+
+document.querySelectorAll('#modal-ajout-piece .modal-close').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('modal-ajout-piece').classList.add('hidden');
+    document.querySelector('.navbar-top').classList.remove('modal-open');
+  });
+});
+
+document.getElementById('form-ajout-piece').addEventListener('submit', function (e) {
+  e.preventDefault();
+  const nom = document.getElementById('nom-piece').value;
+
+  fetch('/api/pieces', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nom })
+  })
+    .then(res => res.json())
+    .then(piece => {
+      ajouterBoutonPiece(piece);
+      document.getElementById('modal-ajout-piece').classList.add('hidden');
+      document.querySelector('.navbar-top').classList.remove('modal-open');
+      this.reset();
+    })
+    .catch(err => console.error('Erreur ajout pièce:', err));
+});
+
+
+function ajouterBoutonPiece(piece) {
+  const container = document.getElementById('liste-pieces');
+
+  const btn = document.createElement('button');
+  btn.className = 'btn2';
+  btn.dataset.target = `piece-${piece.id}`;
+  btn.innerHTML = `<i class="fas fa-door-open"></i> <span class="btn2-text">${piece.nom}</span>`;
+
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.piece-section').forEach(sec => sec.classList.add('hidden'));
+    document.getElementById(`piece-${piece.id}`).classList.toggle('hidden');
+  });
+
+  container.appendChild(btn);
+
+  // Crée une section vide pour la pièce (à remplir plus tard)
+  const section = document.createElement('section');
+  section.id = `piece-${piece.id}`;
+  section.className = 'sub-tab piece-section hidden';
+  section.innerHTML = `<h3>${piece.nom}</h3><p>Objets associés à cette pièce...</p>`;
+  document.querySelector('.sub-tab-container').appendChild(section);
+}
+
+fetch('/api/pieces')
+  .then(res => res.json())
+  .then(data => data.forEach(piece => ajouterBoutonPiece(piece)))
+  .catch(err => console.error('Erreur chargement pièces:', err));
+
+// TEST -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  // Liste temporaire des pièces
+let pieces = [
+  { id: 1, nom: "Salon" },
+  { id: 2, nom: "Cuisine" }
+];
+
+// Génération dynamique des boutons de pièces
+const listePieces = document.getElementById('liste-pieces');
+const conteneurOnglets = document.getElementById('onglets-pieces');
+
+pieces.forEach(piece => {
+  // bouton style .btn2
+  const btn = document.createElement('button');
+  btn.className = 'btn2';
+  btn.dataset.target = `piece-${piece.id}`;
+  btn.innerHTML = `<i class="fas fa-door-open"></i><span class="btn2-text">${piece.nom}</span>`;
+  
+  btn.addEventListener('click', () => {
+    const onglet = document.getElementById(`piece-${piece.id}`);
+    onglet.classList.toggle('hidden');
+    btn.classList.toggle('active');
+  });
+
+  listePieces.appendChild(btn);
+
+  // sous-onglet associé à la pièce
+  const onglet = document.createElement('section');
+  onglet.id = `piece-${piece.id}`;
+  onglet.className = 'sub-tab hidden';
+  onglet.innerHTML = `
+    <h3>${piece.nom}</h3>
+    <p>Objets associés à cette pièce...</p>
+  `;
+
+  conteneurOnglets.appendChild(onglet);
+});

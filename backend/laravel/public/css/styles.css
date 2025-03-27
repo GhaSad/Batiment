@@ -101,6 +101,11 @@ p {
   color: #B29BEB;
 }
 
+#btn-ajouter-piece {
+  margin-top: 30px;
+}
+
+
 /* ########################################## NAVBAR ########################################## */
 
 .navbar-top {
@@ -372,7 +377,7 @@ body.invite .role-invite {
 }
 
 
-/* ########################################## ADMIN PAGE ########################################## */
+/* ########################################## HOME PAGE ########################################## */
 
 .container {
   margin-top: 120px;
@@ -579,3 +584,5 @@ input:checked + .slider:before {
 .modal-overlay.hidden {
   display: none;
 }
+
+
