@@ -171,16 +171,27 @@
     <p>Surveillez la consommation et production énergétique de votre maison.</p>
   
     <div class="button-container">
-      <button class="btn2" data-target="elec-section">⚡ Électricité</button>
-      <button class="btn2" data-target="chauffage-section">🔥 Chauffage</button>
-      <button class="btn2" data-target="eau-section">💧 Eau</button>
+      <button class="btn2" data-target="elec-section">
+        <i class="fas fa-bolt"></i>
+        <span class="btn2-text">Électricité</span>
+      </button>
+      
+      <button class="btn2" data-target="chauffage-section">
+        <i class="fas fa-fire"></i>
+        <span class="btn2-text">Chauffage</span>
+      </button>
+      
+      <button class="btn2" data-target="eau-section">
+        <i class="fas fa-tint"></i>
+        <span class="btn2-text">Eau</span>
+      </button>
     </div>
   </section>
   
   <!-- Sous-sections Énergie -->
   <div class="sub-tab-container">
     <section id="elec-section" class="sub-tab hidden">
-      <h3>⚡ Électricité</h3>
+      <h3>Électricité</h3>
       <canvas id="graphElectricite" width="400" height="200"></canvas>
       <table>
         <thead><tr><th>Appareil</th><th>Consommation</th></tr></thead>
@@ -194,7 +205,7 @@
     </section>
   
     <section id="chauffage-section" class="sub-tab hidden">
-      <h3>🔥 Chauffage</h3>
+      <h3>Chauffage</h3>
       <table>
         <thead><tr><th>Zone</th><th>Consommation</th></tr></thead>
         <tbody>
@@ -203,11 +214,11 @@
         </tbody>
       </table>
       <div class="total">Total : 6.3 kWh</div>
-      <div class="temp-info">🌡️ Intérieure : 21°C | Extérieure : 13°C</div>
+      <div class="temp-info">Température Intérieure : 21°C | Extérieure : 13°C</div>
     </section>
   
     <section id="eau-section" class="sub-tab hidden">
-      <h3>💧 Eau</h3>
+      <h3>Eau</h3>
       <table>
         <thead><tr><th>Appareil</th><th>Consommation</th></tr></thead>
         <tbody>
