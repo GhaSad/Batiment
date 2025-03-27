@@ -168,6 +168,12 @@
 
 <!-- ########################################## Formulaire ajout ########################################## -->
 
+<!-- ########################################## Overlay flouté -->
+
+<div id="modal-overlay" class="modal-overlay hidden"></div>
+
+<!-- ########################################## Formulaire ajout -->
+
 <div id="modal-ajout-objet" class="modal hidden">
   <div class="modal-content">
     <h2 id="modal-title">Ajouter une fenêtre</h2>
@@ -286,38 +292,8 @@
   </main>
 
   <!-- ########################################## SCRIPT ########################################## -->
+
   <script src="{{ asset('js/script.js') }}"></script>
-  <script>
-  function ouvrirModal(type) {
-    // Ouvrir le modal
-    const modal = document.getElementById('modal-ajout-objet');
-    const modalTitle = document.getElementById('modal-title');
-    const objetTypeInput = document.getElementById('objet-type');
-    const objetNomInput = document.getElementById('objet-nom');
-
-    // Adapter le formulaire en fonction du type d'objet
-    if (type === 'porte') {
-      modalTitle.textContent = 'Ajouter une porte';
-      objetTypeInput.value = 'porte';
-    } else if (type === 'fenetre') {
-      modalTitle.textContent = 'Ajouter une fenêtre';
-      objetTypeInput.value = 'fenetre';
-    } else if (type === 'alarme') {
-      modalTitle.textContent = 'Ajouter une alarme';
-      objetTypeInput.value = 'alarme';
-    }
-
-    // Ouvrir le modal
-    modal.classList.remove('hidden');
-  }
-
-  // Fermeture du modal
-  document.querySelectorAll('.modal-close').forEach(button => {
-    button.addEventListener('click', () => {
-      document.getElementById('modal-ajout-objet').classList.add('hidden');
-    });
-  });
-</script>
 
 
 </body>

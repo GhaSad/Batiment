@@ -162,16 +162,18 @@ function highlightItem(itemName) {
   });
 }
 
-//modal ajout fenêtre
+//########################################## modal ajout fenêtre ##########################################
 
 function ouvrirModal(type) {
+  document.getElementById('modal-overlay').classList.remove('hidden');
   const modal = document.getElementById('modal-ajout-objet');
   const title = document.getElementById('modal-title');
   const form = document.getElementById('ajoutObjetForm');
 
   modal.classList.remove('hidden');
+  document.querySelector('.navbar-top').classList.add('modal-open');
 
-  // Changer le titre
+  // Changer le titre dynamiquement
   if (type === 'porte') {
     title.textContent = 'Ajouter une porte';
   } else if (type === 'alarme') {
@@ -180,9 +182,10 @@ function ouvrirModal(type) {
     title.textContent = 'Ajouter une fenêtre';
   }
 
-  // Marquer dans le formulaire quel type d'objet est ajouté
+  // Stocker le type dans le formulaire
   form.dataset.type = type;
 }
+
 
 
 fetch('/api/rooms')
@@ -198,7 +201,13 @@ fetch('/api/rooms')
   })
   .catch(err => console.error('Erreur chargement pièces :', err));
 
-  // Fermer modal avec "Annuler"
-document.querySelector('.modal-close').addEventListener('click', () => {
-  document.getElementById('modal-ajout-objet').classList.add('hidden');
+// Fermer le modal avec le bouton "Annuler"
+document.querySelectorAll('.modal-close').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('modal-ajout-objet').classList.add('hidden');
+    document.getElementById('modal-overlay').classList.add('hidden');
+    document.querySelector('.navbar-top').classList.remove('modal-open');
+  });
 });
+
+
