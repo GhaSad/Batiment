@@ -23,7 +23,7 @@ navButtons.forEach(button => {
 });
 
 
-// ########################################## SOUS-ONGLETS SÉCURITÉ ##########################################
+// ########################################## SOUS-ONGLETS ##########################################
 
 const btn2s = document.querySelectorAll('.btn2');
 
@@ -39,7 +39,7 @@ btn2s.forEach(button => {
 });
 
 
-// ########################################## SWITCHES (PORTES / FENÊTRES) ##########################################
+// ########################################## SWITCHES (Ouvert / Fermé) ##########################################
 
 const switches = document.querySelectorAll('.toggle-switch');
 
@@ -162,7 +162,7 @@ function highlightItem(itemName) {
   });
 }
 
-//########################################## modal ajout  ##########################################
+//########################################## Sécurité   ##########################################
 
 function ouvrirModal(type) {
   document.getElementById('modal-overlay').classList.remove('hidden');
@@ -213,6 +213,7 @@ document.querySelectorAll('.modal-close').forEach(btn => {
 //########################################## Pièces  ##########################################
 
 function ouvrirModalPiece() {
+  document.getElementById('modal-overlay').classList.remove('hidden');
   document.getElementById('modal-ajout-piece').classList.remove('hidden');
   document.querySelector('.navbar-top').classList.add('modal-open');
 }
@@ -220,6 +221,7 @@ function ouvrirModalPiece() {
 document.querySelectorAll('#modal-ajout-piece .modal-close').forEach(btn => {
   btn.addEventListener('click', () => {
     document.getElementById('modal-ajout-piece').classList.add('hidden');
+    document.getElementById('modal-overlay').classList.add('hidden');
     document.querySelector('.navbar-top').classList.remove('modal-open');
   });
 });

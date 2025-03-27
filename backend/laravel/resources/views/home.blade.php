@@ -235,7 +235,10 @@
   </div>
 
   <!-- ########################################## Modal ########################################## -->
+    <!-- ########################################## Overlay flouté -->
 
+    <div id="modal-overlay" class="modal-overlay hidden"></div>
+    
   <div id="modal-ajout-piece" class="modal hidden">
   <div class="modal-content">
     <h2>Ajouter une pièce</h2>
