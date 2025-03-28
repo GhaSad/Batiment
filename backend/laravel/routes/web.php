@@ -3,17 +3,24 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\AuthController;  // N'oublie pas d'importer ce contrôleur
+use App\Http\Controllers\RoomController;
 use App\Models\Device;
 use App\Models\Logs;
 use App\Models\Room;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
+
+
 // Route pour afficher la liste des utilisateurs
 Route::get('/users', [UserController::class, 'index']);
 
+
+
 // Route pour afficher la liste des dispositifs
 Route::get('/device', [DeviceController::class, 'index']);
+
+
 
 // Route pour afficher le formulaire d'inscription
 Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register.form');
@@ -21,11 +28,15 @@ Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('
 // Route pour traiter la soumission du formulaire d'inscription
 Route::post('/register', [UserController::class, 'register'])->name('register.submit');
 
+
+
 // Affichage de la page d'accueil (formulaire de connexion)
 Route::get('/accueil',[AuthController::class, 'showLoginForm'])->name('login.form');
 
 // Traitement du formulaire de connexion
 Route::post('/accueil', [AuthController::class, 'login'])->name('login');
+
+
 
 // Route protégée pour la page d'accueil après connexion
 Route::get('/home', [DeviceController::class, 'index'])->middleware('auth')->name('home');
@@ -33,6 +44,8 @@ Route::get('/home', [DeviceController::class, 'index'])->middleware('auth')->nam
 
 // Route pour traiter la soumission du formulaire de création d'utilisateur
 Route::post('/create-user', [UserController::class, 'createUser'])->name('create.user');
+
+
 
 Route::post('/create-device', [DeviceController::class, 'store'])->name('create-device');
 
@@ -42,6 +55,7 @@ Route::get('/api/rooms', function () {
     return response()->json($rooms);  // Retourner les données au format JSON
 });
 
+//Formulaire pour ajout objets connecté
 
 // Route API pour enregistrer des logs de sécurité (par exemple pour des actions de sécurité comme les portes, fenêtres, etc.)
 Route::post('/api/security/log', function (Request $request) {
@@ -72,5 +86,22 @@ Route::post('/api/security/log', function (Request $request) {
 Route::resource('devices', DeviceController::class);
 
 Route::post('/add-object', [DeviceController::class, 'store'])->name('device-add');
+
+
+
+// Route pour afficher toutes les pièces (accessible depuis l'interface)
+Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
+
+// Route pour créer une pièce
+Route::post('/rooms', [RoomController::class, 'store'])->name('rooms.store');
+
+// Dans le contrôleur
+Route::get('/api/rooms', function () {
+    $rooms = App\Models\Room::where('home_id', auth()->user()->home_id)->get();  // Récupérer toutes les pièces de la maison de l'utilisateur
+    return response()->json($rooms);  // Retourner les données au format JSON
+});
+
+
+Route::post('/add-connected-object', [DeviceController::class, 'store'])->name('add-connected-object');
 
 ?>

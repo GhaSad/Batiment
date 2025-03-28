@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>Maison Connectée - Tableau de Bord</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -207,10 +208,58 @@
     </div>
 
 <!-- ########################################## Énergie ########################################## -->
-    <section id="energie" class="tab-section hidden">
-      <h2><i class="fas fa-bolt"></i> Énergie</h2>
-      <p>Surveillez la consommation et production électrique de votre maison.</p>
+<section id="energie" class="tab-section hidden">
+    <h2><i class="fas fa-bolt"></i> Énergie</h2>
+    <p>Surveillez la consommation et production énergétique de votre maison.</p>
+  
+    <div class="button-container">
+      <button class="btn2" data-target="elec-section">⚡ Électricité</button>
+      <button class="btn2" data-target="chauffage-section">🔥 Chauffage</button>
+      <button class="btn2" data-target="eau-section">💧 Eau</button>
+    </div>
+  </section>
+  
+  <!-- Sous-sections Énergie -->
+  <div class="sub-tab-container">
+    <section id="elec-section" class="sub-tab hidden">
+      <h3>⚡ Électricité</h3>
+      <canvas id="graphElectricite" width="400" height="200"></canvas>
+      <table>
+        <thead><tr><th>Appareil</th><th>Consommation</th></tr></thead>
+        <tbody>
+          <tr><td>Lave-linge</td><td>1.5 kWh</td></tr>
+          <tr><td>Four</td><td>2.0 kWh</td></tr>
+          <tr><td>Réfrigérateur</td><td>0.8 kWh</td></tr>
+        </tbody>
+      </table>
+      <div class="total">Total : 4.3 kWh</div>
     </section>
+  
+    <section id="chauffage-section" class="sub-tab hidden">
+      <h3>🔥 Chauffage</h3>
+      <table>
+        <thead><tr><th>Zone</th><th>Consommation</th></tr></thead>
+        <tbody>
+          <tr><td>Salon</td><td>3.8 kWh</td></tr>
+          <tr><td>Chambre</td><td>2.5 kWh</td></tr>
+        </tbody>
+      </table>
+      <div class="total">Total : 6.3 kWh</div>
+      <div class="temp-info">🌡️ Intérieure : 21°C | Extérieure : 13°C</div>
+    </section>
+  
+    <section id="eau-section" class="sub-tab hidden">
+      <h3>💧 Eau</h3>
+      <table>
+        <thead><tr><th>Appareil</th><th>Consommation</th></tr></thead>
+        <tbody>
+          <tr><td>Lave-linge</td><td>50 L</td></tr>
+          <tr><td>Lave-vaisselle</td><td>40 L</td></tr>
+        </tbody>
+      </table>
+      <div class="total">Total : 90 L</div>
+    </section>
+  </div>
 
 <!-- ########################################## Objets connectés ########################################## -->
 
@@ -235,52 +284,56 @@
 <div id="modal-ajout-objet-connecte" class="modal hidden">
   <div class="modal-content">
     <h2>Ajouter un objet connecté</h2>
-    <form id="form-ajout-objet-connecte">
+    <form id="form-ajout-objet-connecte" method="POST" action="{{ route('add-connected-object') }}">
+  @csrf
+  <!-- Type d'objet -->
+  <div class="form-group">
+    <label for="type-objet">Type d’objet</label>
+    <select id="type-objet" name="type" required>
+      <option value="">-- Choisir --</option>
+      <option value="lumiere">💡 Lumière</option>
+      <option value="tele">📺 Télé</option>
+      <option value="enceinte">🔊 Enceinte</option>
+      <option value="appareil">🍽️ Appareil ménager</option>
+      <option value="aspirateur">🤖 Robot aspirateur</option>
+      <option value="tondeuse">🤖 Robot tondeuse</option>
+      <option value="prise">🔌 Prise connectée</option>
+      <option value="arrosage">💧 Arrosage auto.</option>
+      <option value="thermostat">🌡️ Thermostat</option>
+      <option value="volet">🪟 Volets roulants</option>
+      <option value="serrure">🔒 Serrure connectée</option>
+      <option value="lave_linge">🮚 Lave-linge / sèche-linge</option>
+      <option value="lave_vaisselle">🍽️ Lave-vaisselle</option>
+      <option value="four">🔥 Four</option>
+      <option value="autre">🔧 Autre</option>
+    </select>
+  </div>
 
-      <!-- Type d'objet -->
-      <div class="form-group">
-        <label for="type-objet">Type d’objet</label>
-        <select id="type-objet" required>
-          <option value="">-- Choisir --</option>
-          <option value="lumiere">💡 Lumière</option>
-          <option value="tele">📺 Télé</option>
-          <option value="enceinte">🔊 Enceinte</option>
-          <option value="appareil">🍽️ Appareil ménager</option>
-          <option value="aspirateur">🤖 Robot aspirateur</option>
-          <option value="tondeuse">🤖 Robot tondeuse</option>
-          <option value="prise">🔌 Prise connectée</option>
-          <option value="arrosage">💧 Arrosage auto.</option>
-          <option value="thermostat">🌡️ Thermostat</option>
-          <option value="volet">🪟 Volets roulants</option>
-          <option value="serrure">🔒 Serrure connectée</option>
-          <option value="lave_linge">🮚 Lave-linge / sèche-linge</option>
-          <option value="lave_vaisselle">🍽️ Lave-vaisselle</option>
-          <option value="four">🔥 Four</option>
-          <option value="autre">🔧 Autre</option>
-        </select>
-      </div>
+  <!-- Nom de l'objet -->
+  <div class="form-group">
+    <label for="nom-objet">Nom de l’objet</label>
+    <input type="text" id="nom-objet" name="nom" placeholder="Ex: Lumière du salon" required />
+  </div>
 
-      <!-- Nom de l'objet -->
-      <div class="form-group">
-        <label for="nom-objet">Nom de l’objet</label>
-        <input type="text" id="nom-objet" placeholder="Ex: Lumière du salon" required />
-      </div>
-
-      <!-- Pièce -->
-      <div class="form-group">
+  <!-- Pièce -->
+  <div class="form-group">
         <label for="objet-piece">Pièce</label>
-        <select id="objet-piece" required>
-          <!-- Dynamique via JS -->
+        <select id="objet-piece" name="piece_id">
+          <option value="">-- Aucune pièce --</option>
+          <!-- Options générées dynamiquement via JS -->
+          @foreach ($rooms as $room)
+            <option value="{{ $room->id }}">{{ $room->name }}</option> <!-- Affichage du nom -->
+          @endforeach
         </select>
       </div>
 
-      <!-- Actions -->
-      <div class="modal-actions">
-        <button type="submit" class="btn">Ajouter</button>
-        <button type="button" class="modal-close">Annuler</button>
-      </div>
+  <!-- Actions -->
+  <div class="modal-actions">
+    <button type="submit" class="btn">Ajouter</button>
+    <button type="button" class="modal-close">Annuler</button>
+  </div>
+</form>
 
-    </form>
   </div>
 </div>
 
@@ -393,7 +446,7 @@
 
 
   <script src="{{ asset('js/script.js') }}"></script>
-
+  
 
 </body>
 
