@@ -169,9 +169,13 @@ function ouvrirModal(type) {
   const modal = document.getElementById('modal-ajout-objet');
   const title = document.getElementById('modal-title');
   const form = document.getElementById('ajoutObjetForm');
+  const select = document.getElementById('objet-piece');
 
   modal.classList.remove('hidden');
   document.querySelector('.navbar-top').classList.add('modal-open');
+
+  // Réinitialiser la liste des pièces
+  select.innerHTML = '<option value="">-- Aucune pièce --</option>';  // Réinitialiser les options
 
   // Changer le titre dynamiquement
   if (type === 'porte') {
@@ -184,31 +188,24 @@ function ouvrirModal(type) {
 
   // Stocker le type dans le formulaire
   form.dataset.type = type;
+
+  // Charger les pièces dynamiquement via JS
+  fetch('/api/rooms')
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(piece => {
+        const option = document.createElement('option');
+        option.value = piece.id;
+        option.textContent = piece.nom;
+        select.appendChild(option);  // Ajouter l'option pour chaque pièce
+      });
+    })
+    .catch(err => console.error('Erreur chargement pièces :', err));
 }
 
 
 
-fetch('/api/rooms')
-  .then(res => res.json())
-  .then(data => {
-    const select = document.getElementById('objet-piece');
-    data.forEach(piece => {
-      const option = document.createElement('option');
-      option.value = piece.id;
-      option.textContent = piece.nom;
-      select.appendChild(option);
-    });
-  })
-  .catch(err => console.error('Erreur chargement pièces :', err));
 
-// Fermer le modal avec le bouton "Annuler"
-document.querySelectorAll('.modal-close').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.getElementById('modal-ajout-objet').classList.add('hidden');
-    document.getElementById('modal-overlay').classList.add('hidden');
-    document.querySelector('.navbar-top').classList.remove('modal-open');
-  });
-});
 
 //########################################## Pièces  ##########################################
 
@@ -246,13 +243,14 @@ document.getElementById('form-ajout-piece').addEventListener('submit', function 
 });
 
 
+// Ajouter un bouton pour chaque pièce et les objets associés
 function ajouterBoutonPiece(piece) {
   const container = document.getElementById('liste-pieces');
 
   const btn = document.createElement('button');
   btn.className = 'btn2';
   btn.dataset.target = `piece-${piece.id}`;
-  btn.innerHTML = `<i class="fas fa-door-open"></i> <span class="btn2-text">${piece.nom}</span>`;
+  btn.innerHTML = `<i class="fas fa-door-open"></i> <span class="btn2-text">${piece.nom}</span>`; // Remplacer piece.name par piece.nom
 
   btn.addEventListener('click', () => {
     document.querySelectorAll('.piece-section').forEach(sec => sec.classList.add('hidden'));
@@ -265,14 +263,26 @@ function ajouterBoutonPiece(piece) {
   const section = document.createElement('section');
   section.id = `piece-${piece.id}`;
   section.className = 'sub-tab piece-section hidden';
-  section.innerHTML = `<h3>${piece.nom}</h3><p>Objets associés à cette pièce...</p>`;
+  section.innerHTML = `<h3>${piece.nom}</h3><p>Objets associés à cette pièce...</p>`; // Remplacer piece.name par piece.nom
   document.querySelector('.sub-tab-container').appendChild(section);
 }
 
-fetch('/api/pieces')
+
+// Charger les pièces depuis l'API
+fetch('/api/rooms')
   .then(res => res.json())
-  .then(data => data.forEach(piece => ajouterBoutonPiece(piece)))
-  .catch(err => console.error('Erreur chargement pièces:', err));
+  .then(data => {
+    const listePieces = document.getElementById('liste-pieces');  // Liste des pièces
+
+    // Vider la liste existante avant de rajouter les pièces dynamiques
+    listePieces.innerHTML = '';
+
+    // Ajouter un bouton pour chaque pièce
+    data.forEach(piece => {
+      ajouterBoutonPiece(piece);
+    });
+  })
+  .catch(err => console.error('Erreur lors du chargement des pièces:', err));
 
 // TEST -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -311,4 +321,251 @@ pieces.forEach(piece => {
   `;
 
   conteneurOnglets.appendChild(onglet);
+});
+
+//########################################## Objets  ##########################################
+
+const suggestions = {
+  lumiere: "Lumière du salon",
+  tele: "Télé du séjour",
+  enceinte: "Enceinte Bluetooth",
+  appareil: "Cafetière",
+  aspirateur: "Robot aspirateur",
+  tondeuse: "Robot tondeuse",
+  prise: "Prise connectée",
+  arrosage: "Arrosage jardin",
+  thermostat: "Thermostat principal",
+  volet: "Volet chambre",
+  serrure: "Serrure entrée",
+  lave_linge: "Lave-linge",
+  lave_vaisselle: "Lave-vaisselle",
+  four: "Four connecté",
+  autre: ""
+};
+
+// Suggestion automatique de nom
+document.getElementById('type-objet').addEventListener('change', e => {
+  const valeur = e.target.value;
+  document.getElementById('nom-objet').value = suggestions[valeur] || '';
+});
+
+// Ouvrir / Fermer le modal
+function ouvrirModalObjet() {
+  document.getElementById('modal-ajout-objet-connecte').classList.remove('hidden');
+  document.getElementById('modal-overlay').classList.remove('hidden');
+  document.querySelector('.navbar-top').classList.add('modal-open');
+}
+
+document.querySelectorAll('#modal-ajout-objet-connecte .modal-close').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('modal-ajout-objet-connecte').classList.add('hidden');
+    document.getElementById('modal-overlay').classList.add('hidden');
+    document.querySelector('.navbar-top').classList.remove('modal-open');
+  });
+});
+
+// Remplir la liste des pièces dynamiquement (depuis BDD ou JS temporaire)
+/*
+fetch('/api/rooms')
+  .then(res => res.json())
+  .then(data => {
+    const select = document.getElementById('objet-piece');
+    select.innerHTML = "";
+    data.forEach(piece => {
+      const opt = document.createElement('option');
+      opt.value = piece.id;
+      opt.textContent = piece.nom;
+      select.appendChild(opt);
+    });
+  });
+
+  fetch('/api/rooms')
+  .then(res => res.json())
+  .then(data => {
+    const select = document.getElementById('objet-piece');
+    data.forEach(piece => {
+      const option = document.createElement('option');
+      option.value = piece.id;
+      option.textContent = piece.name; // Affichage du nom de la pièce
+      select.appendChild(option);
+    });
+  })
+  .catch(err => console.error('Erreur chargement pièces :', err));
+  */
+
+// Fonction pour changer dynamiquement le type d'objet
+function ouvrirModal(type) {
+  const modal = document.getElementById('modal-ajout-objet');
+  const modalTitle = document.getElementById('modal-title');
+  const objetTypeInput = document.getElementById('objet-type');
+  
+  // Modifier le titre du modal et le type en fonction de l'objet
+  if (type === 'porte') {
+    modalTitle.textContent = 'Ajouter une porte';
+    objetTypeInput.value = 'porte';
+  } else if (type === 'fenetre') {
+    modalTitle.textContent = 'Ajouter une fenêtre';
+    objetTypeInput.value = 'fenetre';
+  } else if (type === 'alarme') {
+    modalTitle.textContent = 'Ajouter une alarme';
+    objetTypeInput.value = 'alarme';
+  }
+
+  // Ouvrir le modal
+  modal.classList.remove('hidden');
+}
+
+// Fermeture du modal
+document.querySelectorAll('.modal-close').forEach(button => {
+  button.addEventListener('click', () => {
+    document.getElementById('modal-ajout-objet').classList.add('hidden');
+  });
+});
+
+// Fonction pour soumettre le formulaire d'ajout de pièce
+// Lors de l'ajout d'une nouvelle pièce
+document.getElementById('form-ajout-piece').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const nomPiece = document.getElementById('nom-piece').value;
+
+  fetch('/rooms', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Ajouter le token CSRF
+      },
+      body: JSON.stringify({
+          nom: nomPiece
+      })
+  })
+  .then(response => response.json())
+  .then(data => {
+      // Ajouter la nouvelle pièce au bouton liste et à la sous-section
+      const btn = document.createElement('button');
+      btn.className = 'btn2';
+      btn.dataset.target = `piece-${data.id}`;
+      btn.innerHTML = `<i class="fas fa-door-open"></i><span class="btn2-text">${data.name}</span>`;
+
+      // Ajouter un événement au bouton pour afficher/masquer les objets associés à la pièce
+      btn.addEventListener('click', () => {
+        const onglet = document.getElementById(`piece-${data.id}`);
+        onglet.classList.toggle('hidden');
+        btn.classList.toggle('active');
+      });
+
+      // Ajouter le bouton à la liste des pièces
+      document.getElementById('liste-pieces').appendChild(btn);
+
+      // Créer une sous-section pour la nouvelle pièce (les objets associés)
+      const section = document.createElement('section');
+      section.id = `piece-${data.id}`;
+      section.className = 'sub-tab piece-section hidden';
+      section.innerHTML = `
+        <h3>${data.name}</h3>
+        <p>Objets associés à cette pièce...</p>
+      `;
+      document.getElementById('onglets-pieces').appendChild(section);
+
+      // Fermer le modal après l'ajout
+      document.getElementById('modal-ajout-piece').classList.add('hidden');
+      document.getElementById('modal-overlay').classList.add('hidden');
+  })
+  .catch(err => console.error('Erreur ajout pièce:', err));
+});
+
+// Charger toutes les pièces depuis l'API au chargement initial de la page
+fetch('/api/rooms')
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);  // Affiche les données des pièces pour vérifier leur structure
+
+    const listePieces = document.getElementById('liste-pieces');  // Liste des pièces
+
+    // Vider la liste existante avant de rajouter les pièces dynamiques
+    listePieces.innerHTML = '';
+
+    // Ajouter un bouton pour chaque pièce
+    data.forEach(piece => {
+      console.log(piece);  // Vérifiez la structure de chaque pièce
+
+      const btn = document.createElement('button');
+      btn.className = 'btn2';  // Assurez-vous que les boutons ont la bonne classe
+      btn.dataset.target = `piece-${piece.id}`;
+      btn.innerHTML = `
+        <i class="fas fa-door-open"></i> <span class="btn2-text">${piece.name || 'Nom non défini'}</span>
+      `;
+
+      // Ajouter un écouteur pour ouvrir/fermer les sous-sections
+      btn.addEventListener('click', () => {
+        const onglet = document.getElementById(`piece-${piece.id}`);
+        onglet.classList.toggle('hidden');
+        btn.classList.toggle('active');
+      });
+
+      // Ajouter le bouton à la liste des pièces
+      listePieces.appendChild(btn);
+
+      // Créer la section associée à cette pièce (les objets associés)
+      const onglet = document.createElement('section');
+      onglet.id = `piece-${piece.id}`;
+      onglet.className = 'sub-tab hidden';
+      onglet.innerHTML = `
+        <h3>${piece.name || 'Nom non défini'}</h3>
+        <p>Objets associés à cette pièce...</p>
+      `;
+      document.querySelector('.sub-tab-container').appendChild(onglet);
+    });
+  })
+  .catch(err => console.error('Erreur lors du chargement des pièces:', err));
+
+// ###################### OBJETS CONNECTÉS DÉMO ######################
+
+const objetsConnectesDispo = [
+  { type: 'Lumière', icon: 'fas fa-lightbulb', action: 'Allumer / Éteindre' },
+  { type: 'Télé', icon: 'fas fa-tv', action: 'Allumer / Éteindre' },
+  { type: 'Enceinte', icon: 'fas fa-volume-up', action: 'Allumer / Éteindre + Volume' },
+  { type: 'Prise connectée', icon: 'fas fa-plug', action: 'On / Off' },
+  { type: 'Caméra', icon: 'fas fa-video', action: 'Activer / Désactiver' },
+  { type: 'Volet roulant', icon: 'fas fa-window-maximize', action: 'Monter / Descendre' },
+  { type: 'Climatisation', icon: 'fas fa-fan', action: 'On / Off + Température' },
+  { type: 'Capteur de mouvement', icon: 'fas fa-running', action: 'Actif / Inactif' },
+  { type: 'Détecteur de fumée', icon: 'fas fa-fire-extinguisher', action: 'Signal seulement' },
+  { type: 'Radiateur', icon: 'fas fa-thermometer-half', action: 'On / Off + Chauffe' },
+];
+
+const listeObjets = document.getElementById('liste-objets');
+
+objetsConnectesDispo.forEach(objet => {
+  const div = document.createElement('div');
+  div.classList.add('item');
+  div.innerHTML = `
+    <span class="item-name"><i class="${objet.icon}" style="margin-right:10px;"></i>${objet.type}</span>
+    <div class="item-actions">
+      <strong class="status">${objet.action}</strong>
+      <label class="switch">
+        <input type="checkbox" class="toggle-switch">
+        <span class="slider"></span>
+      </label>
+    </div>
+  `;
+  listeObjets.appendChild(div);
+});
+
+// Gérer les switches d'objets connectés
+document.querySelectorAll('.toggle-switch').forEach(toggle => {
+  toggle.addEventListener('change', (e) => {
+    const parent = e.target.closest('.objet-connecte');
+    const status = parent.querySelector('.status');
+    const options = parent.querySelector('.obj-options');
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      status.textContent = 'Allumé';
+      options.classList.remove('hidden');
+    } else {
+      status.textContent = 'Éteint';
+      options.classList.add('hidden');
+    }
+  });
 });

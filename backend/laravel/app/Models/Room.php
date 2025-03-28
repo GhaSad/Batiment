@@ -9,16 +9,23 @@ class Room extends Model
 {
     use HasFactory;
 
-    // Si nécessaire, spécifie les colonnes que tu veux permettre pour l'assignation de masse
-    protected $fillable = ['name', 'description'];
+    // Attributs qui peuvent être assignés en masse
+    protected $fillable = [
+        'name',
+        'description',
+        'home_id', // Associe la pièce à une maison
+    ];
 
-    // Si tu as des relations avec d'autres modèles, tu peux les définir ici, par exemple :
+    // Relier la pièce à la maison
+    public function home()
+    {
+        return $this->belongsTo(Home::class);
+    }
+
+    // Room.php
     public function devices()
     {
         return $this->hasMany(Device::class);
     }
 
-    public function home(){
-        return $this->belongsTo(Home::class);
-    }
 }

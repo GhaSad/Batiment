@@ -16,8 +16,7 @@ class DeviceController extends Controller
 {
     // Récupérer toutes les pièces
     $rooms = Room::all();
-
-
+    
     // Récupérer tous les dispositifs
     $devices = Device::all();
 
@@ -33,7 +32,7 @@ class DeviceController extends Controller
     // Validation des données
     $validated = $request->validate([
         'nom' => 'required|string|max:255',
-        'type' => 'required|in:porte,fenetre,alarme', // Vous validez le type de dispositif
+        'type' => 'required|in:porte,fenetre,alarme,lumiere,tele,enceinte,appareil,aspirateur,tondeuse,prise,arrosage,thermostat,volet,serrure,lave_linge,lave_vaisselle,four,autre', // Vous validez le type de dispositif
         'piece_id' => 'required|exists:rooms,id', // Valider que l'ID de la pièce existe
     ]);
 
