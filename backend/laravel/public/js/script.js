@@ -367,3 +367,54 @@ document.querySelectorAll('#modal-ajout-objet-connecte .modal-close').forEach(bt
     document.querySelector('.navbar-top').classList.remove('modal-open');
   });
 });
+
+// ###################### OBJETS CONNECTÉS DÉMO ######################
+
+const objetsConnectesDispo = [
+  { type: 'Lumière', icon: 'fas fa-lightbulb', action: 'Allumer / Éteindre' },
+  { type: 'Télé', icon: 'fas fa-tv', action: 'Allumer / Éteindre' },
+  { type: 'Enceinte', icon: 'fas fa-volume-up', action: 'Allumer / Éteindre + Volume' },
+  { type: 'Prise connectée', icon: 'fas fa-plug', action: 'On / Off' },
+  { type: 'Caméra', icon: 'fas fa-video', action: 'Activer / Désactiver' },
+  { type: 'Volet roulant', icon: 'fas fa-window-maximize', action: 'Monter / Descendre' },
+  { type: 'Climatisation', icon: 'fas fa-fan', action: 'On / Off + Température' },
+  { type: 'Capteur de mouvement', icon: 'fas fa-running', action: 'Actif / Inactif' },
+  { type: 'Détecteur de fumée', icon: 'fas fa-fire-extinguisher', action: 'Signal seulement' },
+  { type: 'Radiateur', icon: 'fas fa-thermometer-half', action: 'On / Off + Chauffe' },
+];
+
+const listeObjets = document.getElementById('liste-objets');
+
+objetsConnectesDispo.forEach(objet => {
+  const div = document.createElement('div');
+  div.classList.add('item');
+  div.innerHTML = `
+    <span class="item-name"><i class="${objet.icon}" style="margin-right:10px;"></i>${objet.type}</span>
+    <div class="item-actions">
+      <strong class="status">${objet.action}</strong>
+      <label class="switch">
+        <input type="checkbox" class="toggle-switch">
+        <span class="slider"></span>
+      </label>
+    </div>
+  `;
+  listeObjets.appendChild(div);
+});
+
+// Gérer les switches d'objets connectés
+document.querySelectorAll('.toggle-switch').forEach(toggle => {
+  toggle.addEventListener('change', (e) => {
+    const parent = e.target.closest('.objet-connecte');
+    const status = parent.querySelector('.status');
+    const options = parent.querySelector('.obj-options');
+    const isChecked = e.target.checked;
+
+    if (isChecked) {
+      status.textContent = 'Allumé';
+      options.classList.remove('hidden');
+    } else {
+      status.textContent = 'Éteint';
+      options.classList.add('hidden');
+    }
+  });
+});

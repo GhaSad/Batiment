@@ -213,13 +213,14 @@
     </section>
 
 <!-- ########################################## Objets connectés ########################################## -->
-    <!-- SECTION OBJETS CONNECTÉS -->
+
+
 <section id="objets" class="tab-section hidden">
   <h2><i class="fas fa-lightbulb"></i> Objets Connectés</h2>
   <p>Contrôlez vos lumières, enceintes et autres appareils connectés.</p>
 
   <!-- Liste dynamique des objets connectés -->
-  <div id="liste-objets" class="sub-tab-container">
+  <div id="liste-objets" class="sub-tab-container" class="item-list">
     <!-- Objets générés dynamiquement via JS -->
   </div>
 
