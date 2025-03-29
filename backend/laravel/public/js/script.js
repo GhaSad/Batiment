@@ -569,3 +569,36 @@ document.querySelectorAll('.toggle-switch').forEach(toggle => {
     }
   });
 });
+
+// Charger tous les utilisateurs depuis l'API au chargement de la page
+fetch('/api/utilisateurs')
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);  // Affiche les données des utilisateurs pour vérifier leur structure
+
+    const utilisateursSection = document.getElementById('utilisateurs');  // Section des utilisateurs
+    const usersList = document.createElement('div');  // Conteneur des utilisateurs
+
+    // Vider la section existante avant de rajouter les utilisateurs dynamiques
+    utilisateursSection.innerHTML = '';
+    utilisateursSection.appendChild(usersList);
+
+    // Créer un titre pour la liste des utilisateurs
+    const title = document.createElement('h3');
+    title.textContent = 'Liste des utilisateurs';
+    usersList.appendChild(title);
+
+    // Ajouter chaque utilisateur dans la liste
+    data.forEach(user => {
+      const userDiv = document.createElement('div');
+      userDiv.classList.add('user-item');
+      userDiv.innerHTML = `
+        <strong>${user.username}</strong><br>
+        Email: ${user.email}<br>
+        Role: ${user.role || 'Non défini'}<br>
+        <button class="btn" onclick="gererUtilisateur(${user.id})">Gérer</button>
+      `;
+      usersList.appendChild(userDiv); // Ajouter l'utilisateur à la liste
+    });
+  })
+  .catch(err => console.error('Erreur lors du chargement des utilisateurs:', err));

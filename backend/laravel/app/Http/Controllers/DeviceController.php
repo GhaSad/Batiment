@@ -14,15 +14,16 @@ class DeviceController extends Controller
      */
     public function index()
 {
-    // Récupérer toutes les pièces
-    $rooms = Room::all();
+    // Récupérer toutes les pièces avec les dispositifs associés
+    $rooms = Room::with('devices')->get();
     
-    // Récupérer tous les dispositifs
+    // Récupérer tous les dispositifs (si nécessaire pour d'autres parties de la vue)
     $devices = Device::all();
 
     // Retourner la vue 'home' avec les pièces et les dispositifs
     return view('home', compact('rooms', 'devices'));
 }
+
 
     /**
      * Store a newly created resource in storage.

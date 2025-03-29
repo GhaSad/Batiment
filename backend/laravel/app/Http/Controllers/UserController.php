@@ -9,6 +9,15 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+
+    public function index()
+    {
+        // Récupérer tous les utilisateurs
+        $users = User::all(); // Tu peux filtrer ou paginer si nécessaire
+
+        return response()->json($users); // Renvoie la liste des utilisateurs sous forme de JSON
+    }
+
     // Afficher le formulaire d'inscription
     public function showRegistrationForm()
     {
@@ -93,4 +102,36 @@ class UserController extends Controller
     return redirect()->route('home')->with('success', 'Utilisateur créé avec succès');
 }
 
+    public function store(Request $request)
+    {
+        // Validation des données
+        $validated = $request->validate([
+            'prenom' => 'required|string|max:255',
+            'nom' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',  // Validation de l'email unique
+            'password' => 'required|min:6|confirmed',  // Vérifie que le mot de passe et la confirmation correspondent
+            'date_de_naissance' => 'required|date',
+            'sexe' => 'required|in:homme,femme,autre',
+            'role' => 'required|in:visiteur,simple,admin,complexe',  // Profils possibles
+            'home_id' => 'required|integer|max:255',
+        ]);
+
+        $dateNaissance = \Carbon\Carbon::parse($request->date_de_naissance);
+        $age = $dateNaissance->age; // Calculer l'âge avec Carbon
+
+        // Création de l'utilisateur
+        $user = User::create([
+            'username' => $request->prenom . ' ' . $request->nom,  // Crée le nom d'utilisateur
+            'email' => $request->email,  // Email de l'utilisateur
+            'password' => Hash::make($request->password),  // Sécuriser le mot de passe
+            'role' => $request->role,  // Rôle de l'utilisateur (admin, parent, enfant, visiteur)
+            'date_de_naissance' => $request->date_de_naissance,  // Date de naissance
+            'sexe' => $request->sexe,  // Sexe de l'utilisateur
+            'age' => $age,
+            'home_id' => $request->home_id,  // ID de la maison associée à l'utilisateur
+        ]);
+
+        // Message de succès et redirection
+        return redirect()->route('home')->with('success', 'Utilisateur créé avec succès');
+    }
 }
