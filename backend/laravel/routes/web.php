@@ -106,4 +106,11 @@ Route::get('/api/rooms', function () {
 
 Route::post('/add-connected-object', [DeviceController::class, 'store'])->name('add-connected-object');
 
+Route::get('/api/devices/{type}', [DeviceController::class, 'getDevicesByType']);
+
+Route::get('/api/devices', [DeviceController::class, 'getDevices']);
+
+Route::patch('/api/devices/{id}/status', [DeviceController::class, 'updateDeviceStatus']);
+
+
 ?>

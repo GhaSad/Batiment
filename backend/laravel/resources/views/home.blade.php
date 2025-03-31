@@ -96,16 +96,6 @@
     
       <!-- Liste des portes -->
       <div class="item-list">
-        <div class="item">
-          <span class="item-name">Porte d'entrée</span>
-          <div class="item-actions">
-            <strong class="status">Fermée</strong>
-            <label class="switch">
-              <input type="checkbox" class="toggle-switch">
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
       </div>
     
       <!-- Bouton Ajouter -->
@@ -117,27 +107,6 @@
       <h3>Fenêtres</h3>
     
       <div class="item-list">
-        <div class="item">
-          <span class="item-name">Fenêtre 1</span>
-          <div class="item-actions">
-            <strong class="status">Fermée</strong>
-            <label class="switch">
-              <input type="checkbox" class="toggle-switch">
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
-
-        <div class="item">
-          <span class="item-name">Fenêtre 2</span>
-          <div class="item-actions">
-            <strong class="status">Fermée</strong>
-            <label class="switch">
-              <input type="checkbox" class="toggle-switch">
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
       </div>
     
       <!-- Bouton Ajouter -->
@@ -148,16 +117,6 @@
       <h3>Alarme</h3>
     
       <div class="item-list">
-        <div class="item">
-          <span class="item-name">Alarme principale 1</span>
-          <div class="item-actions">
-            <strong class="status">Désactivé</strong>
-            <label class="switch">
-              <input type="checkbox" class="toggle-switch-alarme">
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
       </div>
     
       <!-- Bouton Ajouter -->

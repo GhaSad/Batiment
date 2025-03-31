@@ -602,3 +602,108 @@ fetch('/api/utilisateurs')
     });
   })
   .catch(err => console.error('Erreur lors du chargement des utilisateurs:', err));
+
+
+// Charger tous les dispositifs depuis l'API
+fetch('/api/devices')
+  .then(response => response.json())
+  .then(devices => {
+    // Filtrer les dispositifs par type
+    const portes = devices.filter(device => device.type === 'porte');
+    const fenetres = devices.filter(device => device.type === 'fenetre');
+    const alarmes = devices.filter(device => device.type === 'alarme');
+
+    // Afficher les portes dans la section des portes
+    displayDevices(portes, 'portes-section');
+
+    // Afficher les fenêtres dans la section des fenêtres
+    displayDevices(fenetres, 'fenetres-section');
+
+    // Afficher les alarmes dans la section des alarmes
+    displayDevices(alarmes, 'alarme-section');
+  })
+  .catch(error => {
+    console.error('Erreur lors du chargement des dispositifs:', error);
+  });
+
+// Fonction pour afficher les dispositifs dans la section appropriée
+function displayDevices(devices, type) {
+  const itemListContainer = document.querySelector(`#${type} .item-list`);  // Conteneur des dispositifs par type (portes, fenêtres, alarmes)
+
+  // Vérifie si le conteneur existe bien pour ce type
+  if (!itemListContainer) {
+    console.error(`Le conteneur pour ${type} est introuvable.`);
+    return;
+  }
+
+  // Vider la liste existante avant d'ajouter les nouveaux dispositifs
+  itemListContainer.innerHTML = '';
+
+  // Ajouter chaque dispositif dans la liste
+  devices.forEach(device => {
+    const itemDiv = document.createElement('div');
+    itemDiv.classList.add('item');
+
+    // Déterminer le statut et les classes CSS à utiliser en fonction du type de dispositif
+    let statusText = '';
+    let switchClass = '';
+    let statusDisplay = '';
+
+    switch (device.type) {
+      case 'fenetre':
+        statusText = device.status === 'actif' ? 'Ouverte' : 'Fermée';
+        switchClass = 'toggle-switch';
+        break;
+      case 'alarme':
+        statusText = device.status === 'actif' ? 'Activée' : 'Désactivée';
+        switchClass = 'toggle-switch-alarme';
+        break;
+      case 'porte':
+        statusText = device.status === 'actif' ? 'Ouverte' : 'Fermée';
+        switchClass = 'toggle-switch';
+        break;
+      default:
+        statusText = 'Statut inconnu';
+    }
+
+    // Créer le contenu de chaque dispositif (porte, fenêtre, alarme)
+    itemDiv.innerHTML = `
+      <span class="item-name">${device.name}</span>
+      <div class="item-actions">
+        <strong class="status">${statusText}</strong>
+        <label class="switch">
+          <input type="checkbox" class="${switchClass}" ${device.status === 'actif' ? 'checked' : ''} onclick="toggleDeviceStatus(${device.id}, this)">
+          <span class="slider"></span>
+        </label>
+      </div>
+    `;
+
+    // Ajouter l'élément du dispositif au conteneur
+    itemListContainer.appendChild(itemDiv);
+  });
+}
+
+// Fonction pour basculer l'état d'un dispositif
+// Fonction pour basculer l'état d'un dispositif
+function toggleDeviceStatus(deviceId, checkbox) {
+  const status = checkbox.checked ? 'actif' : 'inactif'; // Déterminer le statut
+
+  // Récupérer le token CSRF depuis le meta tag
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+  fetch(`/api/devices/${deviceId}/status`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': csrfToken // Ajouter le token CSRF ici
+    },
+    body: JSON.stringify({ status: status })  // Envoyer 'actif' ou 'inactif'
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('État du dispositif mis à jour:', data);
+  })
+  .catch(error => {
+    console.error('Erreur lors de la mise à jour de l\'état du dispositif:', error);
+  });
+}
