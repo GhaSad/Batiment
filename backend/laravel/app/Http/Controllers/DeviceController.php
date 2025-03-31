@@ -14,19 +14,16 @@ class DeviceController extends Controller
      */
     public function index()
 {
-    // Récupérer toutes les pièces
-    $rooms = Room::all();
+    // Récupérer toutes les pièces avec les dispositifs associés
+    $rooms = Room::with('devices')->get();
     
-    // Récupérer tous les dispositifs
+    // Récupérer tous les dispositifs (si nécessaire pour d'autres parties de la vue)
     $devices = Device::all();
 
     // Retourner la vue 'home' avec les pièces et les dispositifs
     return view('home', compact('rooms', 'devices'));
 }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
 {
     // Validation des données
@@ -64,9 +61,6 @@ class DeviceController extends Controller
 }
 
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $request->validate([
@@ -91,9 +85,6 @@ class DeviceController extends Controller
         return response()->json(['success' => true, 'device' =>$device]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $device = Device::find($id);
@@ -115,4 +106,66 @@ class DeviceController extends Controller
 
         return response()->json(['error' => 'Dispositif non trouvé'], 404);
     }
+
+    public function getDevicesByType($type)
+    {
+        // Récupérer les dispositifs filtrés par type
+        $devices = Device::where('type', $type)->get();
+    
+        // Retourner les dispositifs sous forme de JSON
+        return response()->json($devices);
+    }
+    
+    public function getDevices()
+{
+    $devices = Device::all();  // Ou selon ton besoin, tu peux ajouter des conditions
+    return response()->json($devices);  // Renvoie les dispositifs sous forme de JSON
+}
+
+
+public function updateDeviceStatus($id, Request $request)
+{
+    try {
+        // Récupérer le dispositif par ID
+        $device = Device::findOrFail($id);
+
+        // Validation de la requête
+        $validated = $request->validate([
+            'status' => 'required|in:actif,inactif',
+        ]);
+
+        // Changer le statut en fonction de l'état actuel
+        $newStatus = ($device->status === 'actif') ? 'inactif' : 'actif';
+
+        // Mettre à jour le statut du dispositif
+        $device->status = $newStatus;
+        $device->save();
+
+        // Créer un log de cette action
+        $logMessage = "Le statut du dispositif {$device->name} a été changé en {$newStatus}";
+        Logs::create([
+            'user_id' => Auth::id(),  // L'utilisateur qui a effectué l'action
+            'device_id' => $device->id,
+            'log_message' => $logMessage,
+            'status' => $newStatus,
+        ]);
+
+        // Retourner une réponse JSON
+        return response()->json([
+            'message' => 'Statut du dispositif mis à jour avec succès',
+            'device' => $device
+        ]);
+
+    } catch (\Exception $e) {
+        // Retourner une réponse d'erreur avec les détails de l'exception
+        return response()->json([
+            'error' => 'Erreur lors de la mise à jour du statut du dispositif',
+            'details' => $e->getMessage()
+        ], 500);  // Code 500 pour une erreur serveur
+    }
+}
+
+
+
+
 }
