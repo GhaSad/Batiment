@@ -114,12 +114,52 @@ p {
   background-color: #B29BEB;  
 }
 
-
-.logout-container {
+/* Conteneur des boutons */
+.button-container {
   position: fixed;
   top: 20px;
   right: 20px;
+  display: flex;
+  gap: 20px;  /* Espacement entre les boutons */
   z-index: 100;
+}
+
+/* Bouton réglage */
+.settings-container {
+  display: flex;
+}
+
+.settings-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #FFFDF0;
+  color: #4C5561;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.settings-btn i {
+  font-size: 22px;
+  color: #4C5561;
+}
+
+.settings-btn:hover {
+  background-color: #B29BEB;
+  transform: scale(1.1);
+}
+
+.settings-btn:hover i {
+  color: #FFFDF0;
+}
+
+/* Bouton logout */
+.logout-container {
+  display: flex;
 }
 
 .logout-btn {
@@ -149,6 +189,7 @@ p {
 .logout-btn:hover i {
   color: #FFFDF0;
 }
+
 
 
 

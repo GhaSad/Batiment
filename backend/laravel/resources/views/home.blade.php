@@ -13,10 +13,19 @@
 
 <body class="admin"> <!-- Dynamique: admin, parent, enfant, invite -->
   
-<div class="logout-container">
-  <button class="logout-btn">
-    <i class="fas fa-power-off"></i>
-  </button>
+<!-- Boutons à gauche et à droite en haut -->
+<div class="button-container">
+  <div class="settings-container">
+    <button class="settings-btn">
+      <i class="fas fa-cogs"></i>
+    </button>
+  </div>
+
+  <div class="logout-container">
+    <button class="logout-btn">
+      <i class="fas fa-power-off"></i>
+    </button>
+  </div>
 </div>
 
 <!-- ########################################## NAVBAR ########################################## -->
