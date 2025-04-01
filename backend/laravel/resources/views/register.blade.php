@@ -65,16 +65,7 @@
         <input type="text" id="home_id" name="home_id" required>
       </div>
 
-      <div class="form-group">
-          <label for="profil">Type de profil</label>
-          <select id="role" name="role" >
-            <option value="">-- Sélectionner --</option>
-            <option value="admin">Administrateur</option>
-            <option value="complexe">Parent</option>
-            <option value="simple">Enfant</option>
-            <option value="visiteur">Invité</option>
-          </select>
-        </div>
+     
 
       <button type="submit" class="btn">S'inscrire</button>
 

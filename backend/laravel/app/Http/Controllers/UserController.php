@@ -35,7 +35,6 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed',
             'date_de_naissance' => 'required|date',
             'sexe' => 'required|in:homme,femme,autre',  // Validation du sexe
-            'role' => 'required|in:visiteur,simple,complexe,admin',
             'home_id' => 'required|integer|max:255',
         ]);
 
@@ -48,7 +47,7 @@ class UserController extends Controller
                 'username' => $request->prenom . ' ' . $request->nom,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'role' => $request->role ?? 'visiteur',
+                'role' => 'admin',
                 'date_de_naissance' => $request->date_de_naissance,  // Enregistrement de la date de naissance
                 'sexe' => $request->sexe,  // Enregistrement du sexe
                 'age' => $age,
