@@ -13,6 +13,11 @@
 
 <body class="admin"> <!-- Dynamique: admin, parent, enfant, invite -->
   
+<div class="logout-container">
+  <button class="logout-btn">
+    <i class="fas fa-power-off"></i>
+  </button>
+</div>
 
 <!-- ########################################## NAVBAR ########################################## -->
   <nav class="navbar-top">

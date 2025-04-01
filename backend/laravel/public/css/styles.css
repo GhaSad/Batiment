@@ -115,6 +115,43 @@ p {
 }
 
 
+.logout-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.logout-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #FFFDF0;
+  color: #4C5561;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.logout-btn i {
+  font-size: 22px;
+  color: #4C5561;
+}
+
+.logout-btn:hover {
+  background-color: #B29BEB;
+  transform: scale(1.1);
+}
+
+.logout-btn:hover i {
+  color: #FFFDF0;
+}
+
+
+
 /* ########################################## NAVBAR ########################################## */
 
 .navbar-top {
