@@ -96,16 +96,6 @@
     
       <!-- Liste des portes -->
       <div class="item-list">
-        <div class="item">
-          <span class="item-name">Porte d'entrée</span>
-          <div class="item-actions">
-            <strong class="status">Fermée</strong>
-            <label class="switch">
-              <input type="checkbox" class="toggle-switch">
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
       </div>
     
       <!-- Bouton Ajouter -->
@@ -117,27 +107,6 @@
       <h3>Fenêtres</h3>
     
       <div class="item-list">
-        <div class="item">
-          <span class="item-name">Fenêtre 1</span>
-          <div class="item-actions">
-            <strong class="status">Fermée</strong>
-            <label class="switch">
-              <input type="checkbox" class="toggle-switch">
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
-
-        <div class="item">
-          <span class="item-name">Fenêtre 2</span>
-          <div class="item-actions">
-            <strong class="status">Fermée</strong>
-            <label class="switch">
-              <input type="checkbox" class="toggle-switch">
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
       </div>
     
       <!-- Bouton Ajouter -->
@@ -148,16 +117,6 @@
       <h3>Alarme</h3>
     
       <div class="item-list">
-        <div class="item">
-          <span class="item-name">Alarme principale 1</span>
-          <div class="item-actions">
-            <strong class="status">Désactivé</strong>
-            <label class="switch">
-              <input type="checkbox" class="toggle-switch-alarme">
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
       </div>
     
       <!-- Bouton Ajouter -->
@@ -269,8 +228,15 @@
   <p>Contrôlez vos lumières, enceintes et autres appareils connectés.</p>
 
   <!-- Liste dynamique des objets connectés -->
-  <div id="liste-objets" class="sub-tab-container" class="item-list">
-    <!-- Objets générés dynamiquement via JS -->
+  <div id="liste-objets" class="sub-tab-container item-list">
+    <!-- Objets générés dynamiquement via PHP Blade -->
+    @foreach($devices as $device)
+      <div class="objet-item">
+        <p><strong>{{ $device->name }}</strong></p>
+        <p>{{ $device->description }}</p>
+        <p>Status: {{ $device->status ? 'Actif' : 'Inactif' }}</p>
+      </div>
+    @endforeach
   </div>
 
   <!-- Bouton pour ouvrir le modal d'ajout -->
@@ -341,20 +307,25 @@
 
 <!-- ########################################## Pièces ########################################## -->
   
-  <section id="pieces" class="tab-section hidden">
+<section id="pieces" class="tab-section hidden">
     <h2><i class="fas fa-house"></i> Pièces</h2>
     <p>Gérez les pièces de votre maison et les objets associés.</p>
 
     <div class="button-container" id="liste-pieces">
-      <!-- Boutons pièces générés dynamiquement ici -->
+        <!-- Affichage des boutons pièces générés avec Blade -->
+        @foreach($rooms as $room)
+            <button class="btn" onclick="afficherObjets('{{ $room->id }}')">
+                {{ $room->name }}
+            </button>
+        @endforeach
     </div>
 
     <button class="btn small-btn role-admin" id="btn-ajouter-piece" onclick="ouvrirModalPiece()">Ajouter une pièce</button>
-  </section>
+</section>
 
-  <div class="sub-tab-container" id="onglets-pieces">
-  <!-- Les sous-onglets des pièces apparaîtront ici -->
-  </div>
+<div class="sub-tab-container" id="onglets-pieces">
+    <!-- Les sous-onglets des pièces apparaîtront ici -->
+</div>
 
   <!-- ########################################## Modal ########################################## -->
     <!-- ########################################## Overlay flouté -->
@@ -376,10 +347,14 @@
   </div>  
 
 <!-- ########################################## Gérer utilisateurs ########################################## -->
-    <section id="utilisateurs" class="tab-section hidden">
-      <h2><i class="fas fa-users-cog"></i> Gérer utilisateurs</h2>
-      <p>Liste des utilisateurs à gérer...</p>
-    </section>
+<section id="utilisateurs" class="tab-section hidden">
+  <h2><i class="fas fa-users-cog"></i> Gérer utilisateurs</h2>
+  <p>Liste des utilisateurs à gérer...</p>
+
+  <!-- Conteneur dynamique des utilisateurs -->
+  <div id="users-list"></div>
+  <!-- Ajouter bouton pour controle utilisateur (modifier role, supprimer), voir JS partie fetch('/api/utilisateurs')-->
+</section>
 
 <!-- ########################################## Créer utilisateur ########################################## -->
     <section id="creer" class="tab-section hidden">
@@ -418,6 +393,10 @@
           <input type="password" id="password" name="password" required />
         </div>
         <div class="form-group">
+      <label for="password_confirmation">Confirmer le mot de passe</label>
+      <input type="password" id="password_confirmation" name="password_confirmation" required />
+    </div>
+        <div class="form-group">
           <label for="profil">Type de profil</label>
           <select id="role" name="role">
             <option value="">-- Sélectionner --</option>
@@ -439,6 +418,15 @@
         {{ session('success') }}
     </div>
   @endif
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
   </main>
 

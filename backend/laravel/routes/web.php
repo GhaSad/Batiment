@@ -25,6 +25,8 @@ Route::get('/device', [DeviceController::class, 'index']);
 // Route pour afficher le formulaire d'inscription
 Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register.form');
 
+Route::get('/api/utilisateurs', [UserController::class, 'index']);
+
 // Route pour traiter la soumission du formulaire d'inscription
 Route::post('/register', [UserController::class, 'register'])->name('register.submit');
 
@@ -41,10 +43,8 @@ Route::post('/accueil', [AuthController::class, 'login'])->name('login');
 // Route protégée pour la page d'accueil après connexion
 Route::get('/home', [DeviceController::class, 'index'])->middleware('auth')->name('home');
 
-
 // Route pour traiter la soumission du formulaire de création d'utilisateur
-Route::post('/create-user', [UserController::class, 'createUser'])->name('create.user');
-
+Route::post('/create-user', [UserController::class, 'store'])->name('create.user');
 
 
 Route::post('/create-device', [DeviceController::class, 'store'])->name('create-device');
@@ -85,6 +85,8 @@ Route::post('/api/security/log', function (Request $request) {
 // Utiliser une ressource pour gérer les dispositifs
 Route::resource('devices', DeviceController::class);
 
+Route::get('/objets',[DeviceController::class,'index']);
+
 Route::post('/add-object', [DeviceController::class, 'store'])->name('device-add');
 
 
@@ -103,5 +105,12 @@ Route::get('/api/rooms', function () {
 
 
 Route::post('/add-connected-object', [DeviceController::class, 'store'])->name('add-connected-object');
+
+Route::get('/api/devices/{type}', [DeviceController::class, 'getDevicesByType']);
+
+Route::get('/api/devices', [DeviceController::class, 'getDevices']);
+
+Route::patch('/api/devices/{id}/status', [DeviceController::class, 'updateDeviceStatus']);
+
 
 ?>
