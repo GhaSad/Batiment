@@ -184,14 +184,33 @@
       <h3>⚡ Électricité</h3>
       <canvas id="graphElectricite" width="400" height="200"></canvas>
       <table>
-        <thead><tr><th>Appareil</th><th>Consommation</th></tr></thead>
-        <tbody>
-          <tr><td>Lave-linge</td><td>1.5 kWh</td></tr>
-          <tr><td>Four</td><td>2.0 kWh</td></tr>
-          <tr><td>Réfrigérateur</td><td>0.8 kWh</td></tr>
-        </tbody>
-      </table>
-      <div class="total">Total : 4.3 kWh</div>
+    <thead>
+      <tr>
+        <th>Appareil</th>
+        <th>Consommation</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($devices as $device)
+        @foreach($device->energyUsage as $usage)
+          <tr>
+            <td>{{ $device->name }}</td>
+            <td>{{ number_format($usage->consumption, 2) }} kWh</td>
+          </tr>
+        @endforeach
+      @endforeach
+    </tbody>
+  </table>
+
+  <div class="total">
+    Total : 
+    @php
+      $totalConsumption = $devices->sum(function($device) {
+        return $device->energyUsage->sum('consumption');
+      });
+    @endphp
+    {{ number_format($totalConsumption, 2) }} kWh
+  </div>
     </section>
   
     <section id="chauffage-section" class="sub-tab hidden">

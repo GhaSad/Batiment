@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('energy_usage', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('device_id')->constrained('devices')->onDelete('cascade');
+            $table->unique('device_id');  // Chaque dispositif ne peut avoir qu'une seule consommation
+            $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
             $table->float('consumption');
             $table->foreignId('home_id')->constrained('homes')->onDelete('cascade');
             $table->timestamp('recorded_at')->nullable();
@@ -25,6 +26,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('energy_usage');
+        Schema::table('energy_usage', function (Blueprint $table) {
+            // Supprimer la contrainte unique et la clé étrangère si nécessaire
+            $table->dropForeign(['device_id']);
+            $table->dropUnique(['device_id']);
+        });
     }
 };

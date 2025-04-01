@@ -9,6 +9,8 @@ class EnergyUsage extends Model
 {
     use HasFactory;
 
+    protected $table = 'energy_usage';
+
     // Si nécessaire, spécifie les colonnes que tu veux permettre pour l'assignation de masse
     protected $fillable = ['device_id', 'consumption', 'recorded_at'];
 
