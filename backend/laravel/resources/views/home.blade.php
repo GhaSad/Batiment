@@ -22,7 +22,7 @@
   </div>
 
   <div class="logout-container">
-    <button class="logout-btn">
+    <button class="logout-btn" id="logoutBtn">
       <i class="fas fa-power-off"></i>
     </button>
   </div>
