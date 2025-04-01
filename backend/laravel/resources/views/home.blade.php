@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>Maison Connectée - Tableau de Bord</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -183,6 +184,9 @@
     <section id="elec-section" class="sub-tab hidden">
       <h3>⚡ Électricité</h3>
       <canvas id="graphElectricite" width="400" height="200"></canvas>
+      <div id="devicesData" 
+    data-devices="{{ json_encode($devices) }}">
+</div>
       <table>
     <thead>
       <tr>
@@ -191,26 +195,33 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($devices as $device)
-        @foreach($device->energyUsage as $usage)
-          <tr>
+    @foreach($devices as $device)
+    @if($device->energyUsage && is_object($device->energyUsage))  <!-- Vérifie si energyUsage existe et est un objet -->
+        <tr>
             <td>{{ $device->name }}</td>
-            <td>{{ number_format($usage->consumption, 2) }} kWh</td>
-          </tr>
-        @endforeach
-      @endforeach
+            <td>{{ number_format($device->energyUsage->consumption, 2) }} kWh</td>  <!-- Affiche la consommation -->
+        </tr>
+    @else
+        <tr>
+            <td>{{ $device->name }}</td>
+            <td>Pas de données</td> <!-- Si aucune consommation n'est trouvée -->
+        </tr>
+    @endif
+@endforeach
+
     </tbody>
   </table>
 
   <div class="total">
-    Total : 
-    @php
-      $totalConsumption = $devices->sum(function($device) {
-        return $device->energyUsage->sum('consumption');
-      });
-    @endphp
-    {{ number_format($totalConsumption, 2) }} kWh
-  </div>
+  Total : 
+  @php
+    $totalConsumption = $devices->sum(function($device) {
+        // Vérifie si energyUsage existe et est non null avant d'ajouter la consommation
+        return $device->energyUsage ? $device->energyUsage->consumption : 0;
+    });
+  @endphp
+  {{ number_format($totalConsumption, 2) }} kWh
+</div>
     </section>
   
     <section id="chauffage-section" class="sub-tab hidden">

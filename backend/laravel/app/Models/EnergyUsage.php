@@ -17,7 +17,7 @@ class EnergyUsage extends Model
     // Relation avec le modèle Device
     public function device()
     {
-        return $this->belongsTo(Device::class);
+        return $this->hasOne(Device::class);
     }
 
     public function home(){

@@ -26,6 +26,10 @@ class Device extends Model
         return $this->belongsTo(Room::class);
     }
 
+    public function energyUsage(){
+        return $this->hasOne(EnergyUsage::class);
+    }
+
     public function home(){
         return $this->belongsTo(Home::class);
     }

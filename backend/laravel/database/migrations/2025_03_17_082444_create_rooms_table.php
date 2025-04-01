@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->float('heating_consumption')->default(0);
             $table->string('description')->nullable();
             $table->foreignId('home_id')->constrained('homes')->onDelete('cascade');
             $table->timestamps();
