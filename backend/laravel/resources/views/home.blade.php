@@ -145,7 +145,7 @@
 
     <!-- ########################################## Overlay flouté -->
 
-    <div id="modal-overlay" class="modal-overlay hidden"></div>
+    <div id="modal-overlay"></div>
 
     <!-- ########################################## Formulaire  -->
 
@@ -288,7 +288,7 @@
 </section>
 
 <!-- MODAL OVERLAY (en dehors de toute section) -->
-<div id="modal-overlay" class="modal-overlay hidden"></div>
+<div id="modal-overlay"></div>
 
 <!-- MODAL AJOUT OBJET CONNECTÉ (placer en bas de la page) -->
 <div id="modal-ajout-objet-connecte" class="modal hidden">
@@ -374,7 +374,7 @@
   <!-- ########################################## Modal ########################################## -->
     <!-- ########################################## Overlay flouté -->
 
-    <div id="modal-overlay" class="modal-overlay hidden"></div>
+    <div id="modal-overlay"></div>
 
   <div id="modal-ajout-piece" class="modal hidden">
   <div class="modal-content">

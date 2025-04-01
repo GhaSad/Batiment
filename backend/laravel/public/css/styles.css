@@ -21,6 +21,7 @@ h1 {
 }
 
 h2 {
+  margin-top: 15px;
   margin-bottom: 35px;
 }
 
@@ -659,23 +660,6 @@ input:checked + .slider:before {
   margin-bottom: 10px;
 }
 
-.navbar-top.modal-open {
-  pointer-events: none;
-  opacity: 0.6;
-  filter: blur(1px);
-}
 
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(8px);
-  z-index: 9;
-  transition: opacity 0.3s ease;
-}
-
-.modal-overlay.hidden {
-  display: none;
-}
 
 /* ########################################## objet ########################################## */
