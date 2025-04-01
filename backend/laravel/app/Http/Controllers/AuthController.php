@@ -32,4 +32,12 @@ public function login(Request $request)
     }
 }
 
+public function index()
+{
+    $user = Auth::user();  // Récupère l'utilisateur connecté
+
+    // Passer le rôle de l'utilisateur à la vue
+    return view('home', ['role' => $user->role]);
+}
+
 }

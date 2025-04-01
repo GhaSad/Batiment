@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
-<body class="admin"> <!-- Dynamique: admin, parent, enfant, invite -->
+<body class="{{ auth()->user()->role }}"> <!-- Dynamique: admin, parent, enfant, invite -->
   
 <!-- Boutons à gauche et à droite en haut -->
 <div class="btn-container">
@@ -445,9 +445,9 @@
           <select id="role" name="role">
             <option value="">-- Sélectionner --</option>
             <option value="admin">Administrateur</option>
-            <option value="complexe">Parent</option>
-            <option value="simple">Enfant</option>
-            <option value="visiteur">Invité</option>
+            <option value="parent">Parent</option>
+            <option value="enfant">Enfant</option>
+            <option value="invite">Invité</option>
           </select>
         </div>
         <div class="form-group">

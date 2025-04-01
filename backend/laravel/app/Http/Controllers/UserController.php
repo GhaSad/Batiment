@@ -78,7 +78,7 @@ class UserController extends Controller
         'password' => 'required|min:6|confirmed',
         'date_de_naissance' => 'required|date',
         'sexe' => 'required|in:homme,femme,autre',
-        'role' => 'required|in:visiteur,simple,admin,complexe', // Profils possibles
+        'role' => 'required|in:invite,enfant,admin,parent', // Profils possibles
         'home_id' => 'required|integer|max:255',
     ]);
 
@@ -103,6 +103,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+
         // Validation des données
         $validated = $request->validate([
             'prenom' => 'required|string|max:255',
@@ -111,7 +112,7 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed',  // Vérifie que le mot de passe et la confirmation correspondent
             'date_de_naissance' => 'required|date',
             'sexe' => 'required|in:homme,femme,autre',
-            'role' => 'required|in:visiteur,simple,admin,complexe',  // Profils possibles
+            'role' => 'required|in:invite,enfant,admin,parent',  // Profils possibles
             'home_id' => 'required|integer|max:255',
         ]);
 

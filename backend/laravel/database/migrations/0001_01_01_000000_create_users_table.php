@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('date_de_naissance');
             $table->string('email')->unique();
             $table->string('password');
-            $table->enum('role', ['visiteur', 'simple', 'complexe', 'admin'])->default('visiteur');
+            $table->enum('role', ['invite', 'enfant', 'parent', 'admin'])->default('invite');
             $table->string('photo')->nullable();
             $table->foreignId('home_id')->constrained('homes')->onDelete('cascade');
             $table->timestamps();
