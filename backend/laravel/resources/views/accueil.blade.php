@@ -32,8 +32,11 @@
       <h1>Prenez le contrôle de votre maison.</h1>
       <p>Contrôlez vos lumières, chauffages, caméras et bien plus, où que vous soyez. Tout est centralisé, simple à gérer, et entièrement sécurisé.</p>
       <button class="btn" id="openModal">Se connecter / S'inscrire</button>
-      <button class="btn demo-btn" id="demoButton">Voir la démo</button>
     </div>
+    <div class="container-demo">
+    <button class="btn demo-btn" id="demoButton">Voir la démo</button>
+    </div>
+  
   </header>
 
   <!-- Modal -->
