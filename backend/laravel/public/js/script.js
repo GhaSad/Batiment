@@ -701,3 +701,29 @@ function toggleDeviceStatus(deviceId, checkbox) {
     console.error('Erreur lors de la mise à jour de l\'état du dispositif:', error);
   });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  // Fonction pour déconnecter l'utilisateur
+  logoutBtn.addEventListener('click', function () {
+    fetch('/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Inclure le token CSRF pour sécuriser la requête
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        window.location.href = "/accueil"; // Rediriger vers la page d'accueil ou de connexion
+      } else {
+        alert('Erreur lors de la déconnexion');
+      }
+    })
+    .catch(error => {
+      console.error('Erreur lors de la déconnexion:', error);
+    });
+  });
+});
