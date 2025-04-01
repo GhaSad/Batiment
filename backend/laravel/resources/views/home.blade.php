@@ -145,7 +145,7 @@
 
     <!-- ########################################## Overlay flouté -->
 
-    <div id="modal-overlay" class="modal-overlay hidden"></div>
+    <div id="modal-overlay"></div>
 
     <!-- ########################################## Formulaire  -->
 
@@ -183,20 +183,32 @@
 
 <!-- ########################################## Énergie ########################################## -->
 <section id="energie" class="tab-section hidden">
-    <h2><i class="fas fa-bolt"></i> Énergie</h2>
-    <p>Surveillez la consommation et production énergétique de votre maison.</p>
-  
-    <div class="button-container">
-      <button class="btn2" data-target="elec-section">⚡ Électricité</button>
-      <button class="btn2" data-target="chauffage-section">🔥 Chauffage</button>
-      <button class="btn2" data-target="eau-section">💧 Eau</button>
-    </div>
-  </section>
+  <h2><i class="fas fa-bolt"></i> Énergie</h2>
+  <p>Surveillez la consommation et production énergétique de votre maison.</p>
+
+  <div class="button-container">
+    <button class="btn2" data-target="elec-section">
+      <i class="fas fa-bolt"></i>
+      <span class="btn2-text">Électricité</span>
+    </button>
+
+    <button class="btn2" data-target="chauffage-section">
+      <i class="fas fa-fire"></i>
+      <span class="btn2-text">Chauffage</span>
+    </button>
+
+    <button class="btn2" data-target="eau-section">
+      <i class="fas fa-tint"></i>
+      <span class="btn2-text">Eau</span>
+    </button>
+  </div>
+</section>
+
   
   <!-- Sous-sections Énergie -->
   <div class="sub-tab-container">
     <section id="elec-section" class="sub-tab hidden">
-      <h3>⚡ Électricité</h3>
+      <h3>Électricité</h3>
       <canvas id="graphElectricite" width="400" height="200"></canvas>
       <div id="devicesData" 
     data-devices="{{ json_encode($devices) }}">
@@ -239,7 +251,7 @@
     </section>
   
     <section id="chauffage-section" class="sub-tab hidden">
-      <h3>🔥 Chauffage</h3>
+      <h3>Chauffage</h3>
       <table>
         <thead><tr><th>Zone</th><th>Consommation</th></tr></thead>
         <tbody>
@@ -252,7 +264,7 @@
     </section>
   
     <section id="eau-section" class="sub-tab hidden">
-      <h3>💧 Eau</h3>
+      <h3>Eau</h3>
       <table>
         <thead><tr><th>Appareil</th><th>Consommation</th></tr></thead>
         <tbody>
@@ -288,10 +300,10 @@
 </section>
 
 <!-- MODAL OVERLAY (en dehors de toute section) -->
-<div id="modal-overlay" class="modal-overlay hidden"></div>
+<div id="modal-overlay"></div>
 
 <!-- MODAL AJOUT OBJET CONNECTÉ (placer en bas de la page) -->
-<div id="modal-ajout-objet-connecte " class="modal hidden">
+<div id="modal-ajout-objet-connecte" class="modal hidden">
   <div class="modal-content">
     <h2>Ajouter un objet connecté</h2>
     <form id="form-ajout-objet-connecte" method="POST" action="{{ route('add-connected-object') }}">
@@ -374,7 +386,7 @@
   <!-- ########################################## Modal ########################################## -->
     <!-- ########################################## Overlay flouté -->
 
-    <div id="modal-overlay" class="modal-overlay hidden"></div>
+    <div id="modal-overlay"></div>
 
   <div id="modal-ajout-piece" class="modal hidden">
   <div class="modal-content">

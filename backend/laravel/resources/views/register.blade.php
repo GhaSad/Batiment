@@ -69,6 +69,8 @@
 
       <button type="submit" class="btn">S'inscrire</button>
 
+      <p class="form-link">⚠️ Le compte créé aura automatiquement le rôle : <strong>Administrateur</strong>.</p>
+
       <p class="form-link">Déjà inscrit ? <a href="accueil.html?openModal=true">Se connecter</a></p>
     </form>
   </div>

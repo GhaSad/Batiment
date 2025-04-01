@@ -172,7 +172,6 @@ function ouvrirModal(type) {
   const select = document.getElementById('objet-piece');
 
   modal.classList.remove('hidden');
-  document.querySelector('.navbar-top').classList.add('modal-open');
 
   // Réinitialiser la liste des pièces
   select.innerHTML = '<option value="">-- Aucune pièce --</option>';  // Réinitialiser les options
@@ -212,14 +211,12 @@ function ouvrirModal(type) {
 function ouvrirModalPiece() {
   document.getElementById('modal-overlay').classList.remove('hidden');
   document.getElementById('modal-ajout-piece').classList.remove('hidden');
-  document.querySelector('.navbar-top').classList.add('modal-open');
 }
 
 document.querySelectorAll('#modal-ajout-piece .modal-close').forEach(btn => {
   btn.addEventListener('click', () => {
     document.getElementById('modal-ajout-piece').classList.add('hidden');
     document.getElementById('modal-overlay').classList.add('hidden');
-    document.querySelector('.navbar-top').classList.remove('modal-open');
   });
 });
 
@@ -236,7 +233,6 @@ document.getElementById('form-ajout-piece').addEventListener('submit', function 
     .then(piece => {
       ajouterBoutonPiece(piece);
       document.getElementById('modal-ajout-piece').classList.add('hidden');
-      document.querySelector('.navbar-top').classList.remove('modal-open');
       this.reset();
     })
     .catch(err => console.error('Erreur ajout pièce:', err));
@@ -353,14 +349,12 @@ document.getElementById('type-objet').addEventListener('change', e => {
 function ouvrirModalObjet() {
   document.getElementById('modal-ajout-objet-connecte').classList.remove('hidden');
   document.getElementById('modal-overlay').classList.remove('hidden');
-  document.querySelector('.navbar-top').classList.add('modal-open');
 }
 
 document.querySelectorAll('#modal-ajout-objet-connecte .modal-close').forEach(btn => {
   btn.addEventListener('click', () => {
     document.getElementById('modal-ajout-objet-connecte').classList.add('hidden');
     document.getElementById('modal-overlay').classList.add('hidden');
-    document.querySelector('.navbar-top').classList.remove('modal-open');
   });
 });
 
@@ -707,65 +701,3 @@ function toggleDeviceStatus(deviceId, checkbox) {
     console.error('Erreur lors de la mise à jour de l\'état du dispositif:', error);
   });
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-  // Récupérer les données des appareils depuis l'attribut data-devices
-  const devicesData = JSON.parse(document.getElementById('devicesData').getAttribute('data-devices'));
-
-  // Extraire les noms des appareils et leur consommation
-  const deviceNames = devicesData.map(device => device.name);  // Noms des appareils
-  const deviceConsumptions = devicesData.map(device => {
-      return device.energy_usage ? device.energy_usage.consumption : 0;
-  });  // Consommation des appareils
-
-  // Sélectionner le canvas
-  const ctx = document.getElementById('graphElectricite').getContext('2d');
-
-  // Créer le graphique
-  new Chart(ctx, {
-      type: 'bar',  // Choix du type de graphique (barres)
-      data: {
-          labels: deviceNames, // Noms des appareils
-          datasets: [{
-              label: 'Consommation (kWh)',  // Légende
-              data: deviceConsumptions, // Consommation des appareils
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Couleur de fond
-              borderColor: 'rgba(75, 192, 192, 1)',  // Couleur de la bordure
-              borderWidth: 1  // Largeur de la bordure
-          }]
-      },
-      options: {
-          scales: {
-              y: {
-                  beginAtZero: true  // Commencer l'axe Y à 0
-              }
-          }
-      }
-  });
-});
-
-document.addEventListener('DOMContentLoaded', function () {
-  const logoutBtn = document.getElementById('logoutBtn');
-
-  // Fonction pour déconnecter l'utilisateur
-  logoutBtn.addEventListener('click', function () {
-    fetch('/logout', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // Inclure le token CSRF pour sécuriser la requête
-      },
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        window.location.href = "/accueil"; // Rediriger vers la page d'accueil ou de connexion
-      } else {
-        alert('Erreur lors de la déconnexion');
-      }
-    })
-    .catch(error => {
-      console.error('Erreur lors de la déconnexion:', error);
-    });
-  });
-});
