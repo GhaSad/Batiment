@@ -105,6 +105,15 @@ p {
   margin-top: 30px;
 }
 
+.demo-btn {
+  margin-top: 15px;  /* Décalage pour le bouton sous le premier */
+  background-color: #7A5DD5;  /* Choisissez la couleur de votre choix */
+}
+
+.demo-btn:hover {
+  background-color: #B29BEB;  /* Couleur au survol */
+}
+
 
 /* ########################################## NAVBAR ########################################## */
 
