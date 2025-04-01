@@ -112,5 +112,9 @@ Route::get('/api/devices', [DeviceController::class, 'getDevices']);
 
 Route::patch('/api/devices/{id}/status', [DeviceController::class, 'updateDeviceStatus']);
 
+Route::post('/logout', function () {
+    Auth::logout();  // Déconnexion de l'utilisateur
+    return response()->json(['success' => true]);  // Retourne un message JSON de succès
+})->name('logout');
 
 ?>
