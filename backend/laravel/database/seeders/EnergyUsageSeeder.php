@@ -22,8 +22,7 @@ class EnergyUsageSeeder extends Seeder
         // Vérifier si des dispositifs existent dans la table
         if ($devices->isNotEmpty()) {
             foreach ($devices as $device) {
-                // Récupérer les informations supplémentaires (home_id et room_id)
-                $home_id = $device->home_id;  // Suppose que home_id est une relation directe
+                $home_id = $device->home_id; 
 
                 // Création de 5 enregistrements de consommation pour chaque appareil
                 for ($i = 0; $i < 5; $i++) {
