@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
-<body class="admin"> <!-- Dynamique: admin, parent, enfant, invite -->
+<body class="enfant"> <!-- Dynamique: admin, parent, enfant, invite -->
   
 <!-- Boutons à gauche et à droite en haut -->
 <div class="btn-container">
@@ -284,14 +284,14 @@
   </div>
 
   <!-- Bouton pour ouvrir le modal d'ajout -->
-  <button class="btn" onclick="ouvrirModalObjet()">Ajouter un objet</button>
+  <button class="btn role-admin" onclick="ouvrirModalObjet()">Ajouter un objet</button>
 </section>
 
 <!-- MODAL OVERLAY (en dehors de toute section) -->
 <div id="modal-overlay" class="modal-overlay hidden"></div>
 
 <!-- MODAL AJOUT OBJET CONNECTÉ (placer en bas de la page) -->
-<div id="modal-ajout-objet-connecte" class="modal hidden">
+<div id="modal-ajout-objet-connecte " class="modal hidden">
   <div class="modal-content">
     <h2>Ajouter un objet connecté</h2>
     <form id="form-ajout-objet-connecte" method="POST" action="{{ route('add-connected-object') }}">
