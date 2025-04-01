@@ -115,7 +115,7 @@ p {
 }
 
 /* Conteneur des boutons */
-.button-container {
+.btn-container {
   position: fixed;
   top: 20px;
   right: 20px;
