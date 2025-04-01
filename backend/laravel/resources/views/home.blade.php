@@ -291,7 +291,7 @@
 <div id="modal-overlay" class="modal-overlay hidden"></div>
 
 <!-- MODAL AJOUT OBJET CONNECTÉ (placer en bas de la page) -->
-<div id="modal-ajout-objet-connecte " class="modal hidden">
+<div id="modal-ajout-objet-connecte" class="modal hidden">
   <div class="modal-content">
     <h2>Ajouter un objet connecté</h2>
     <form id="form-ajout-objet-connecte" method="POST" action="{{ route('add-connected-object') }}">
