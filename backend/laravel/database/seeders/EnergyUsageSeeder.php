@@ -1,43 +1,31 @@
 <?php
 namespace Database\Seeders;
 
-use App\Models\Device;
 use Illuminate\Database\Seeder;
+use App\Models\Device;
+use App\Models\EnergyUsage;
 use Faker\Factory as Faker;
-use Illuminate\Support\Facades\DB;
 
 class EnergyUsageSeeder extends Seeder
 {
-    public function run() : void 
+    public function run()
     {
-        // Truncate la table 'energy_usage' pour éviter les doublons lors de l'exécution du seeder
-        DB::table('energy_usage')->truncate();
-
-        // Initialisation de Faker pour générer des données aléatoires
         $faker = Faker::create();
 
-        // Récupérer tous les dispositifs de la base
+        // Récupère tous les dispositifs existants
         $devices = Device::all();
 
-        // Vérifier si des dispositifs existent dans la table
-        if ($devices->isNotEmpty()) {
-            foreach ($devices as $device) {
-                // Récupérer les informations supplémentaires (home_id et room_id)
-                $home_id = $device->home_id;  // Suppose que home_id est une relation directe
-
-                // Création de 5 enregistrements de consommation pour chaque appareil
-                for ($i = 0; $i < 5; $i++) {
-                    DB::table('energy_usage')->insert([
-                        'device_id' => $device->id,
-                        'home_id' => $home_id,  // Ajouter le home_id
-                        'consumption' => $faker->randomFloat(2, 0.1, 5), // Consommation entre 0.1 et 5 kWh
-                        'recorded_at' => $faker->dateTimeThisYear, // Date et heure aléatoires cette année
-                    ]);
-                }
+        foreach ($devices as $device) {
+            // Vérifie si une consommation pour cet appareil existe déjà
+            if (!EnergyUsage::where('device_id', $device->id)->exists()) {
+                // Créer un enregistrement de consommation pour chaque dispositif
+                EnergyUsage::create([
+                    'device_id' => $device->id,
+                    'consumption' => $faker->randomFloat(2, 0.1, 5), // Consommation aléatoire entre 0.1 et 5 kWh
+                    'recorded_at' => $faker->dateTimeThisYear, // Date aléatoire de cette année
+                    'home_id' => $device->home_id, // Récupère le `home_id` depuis le dispositif
+                ]);
             }
-        } else {
-            // Message de log si aucun dispositif n'est trouvé
-            \Log::warning('Aucun dispositif trouvé dans la base de données pour insérer des données de consommation.');
         }
     }
 }

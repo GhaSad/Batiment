@@ -95,7 +95,6 @@ p {
 .btn2.active {
   background-color: #FFFDF0;
 }
-
 .btn2.active i,
 .btn2.active .btn2-text {
   color: #B29BEB;
@@ -104,6 +103,94 @@ p {
 #btn-ajouter-piece {
   margin-top: 30px;
 }
+
+.demo-btn {
+  color: #4C5561;
+  margin-top: 15px; 
+  background-color: #FFFDF0; 
+}
+
+.demo-btn:hover {
+  background-color: #B29BEB;  
+}
+
+/* Conteneur des boutons */
+.btn-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 20px;  /* Espacement entre les boutons */
+  z-index: 100;
+}
+
+/* Bouton réglage */
+.settings-container {
+  display: flex;
+}
+
+.settings-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #FFFDF0;
+  color: #4C5561;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.settings-btn i {
+  font-size: 22px;
+  color: #4C5561;
+}
+
+.settings-btn:hover {
+  background-color: #B29BEB;
+  transform: scale(1.1);
+}
+
+.settings-btn:hover i {
+  color: #FFFDF0;
+}
+
+/* Bouton logout */
+.logout-container {
+  display: flex;
+}
+
+.logout-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #FFFDF0;
+  color: #4C5561;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.logout-btn i {
+  font-size: 22px;
+  color: #4C5561;
+}
+
+.logout-btn:hover {
+  background-color: #B29BEB;
+  transform: scale(1.1);
+}
+
+.logout-btn:hover i {
+  color: #FFFDF0;
+}
+
+
 
 
 /* ########################################## NAVBAR ########################################## */
@@ -388,6 +475,10 @@ body.invite .role-invite {
   text-align: center;
 }
 
+.container-demo {
+  text-align: center;
+}
+
 .create-user-section {
   padding: 20px;
   background: rgba(255, 255, 255, 0.2);
@@ -588,4 +679,3 @@ input:checked + .slider:before {
 }
 
 /* ########################################## objet ########################################## */
-

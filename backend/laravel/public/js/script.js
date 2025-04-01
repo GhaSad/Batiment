@@ -707,3 +707,39 @@ function toggleDeviceStatus(deviceId, checkbox) {
     console.error('Erreur lors de la mise à jour de l\'état du dispositif:', error);
   });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Récupérer les données des appareils depuis l'attribut data-devices
+  const devicesData = JSON.parse(document.getElementById('devicesData').getAttribute('data-devices'));
+
+  // Extraire les noms des appareils et leur consommation
+  const deviceNames = devicesData.map(device => device.name);  // Noms des appareils
+  const deviceConsumptions = devicesData.map(device => {
+      return device.energy_usage ? device.energy_usage.consumption : 0;
+  });  // Consommation des appareils
+
+  // Sélectionner le canvas
+  const ctx = document.getElementById('graphElectricite').getContext('2d');
+
+  // Créer le graphique
+  new Chart(ctx, {
+      type: 'bar',  // Choix du type de graphique (barres)
+      data: {
+          labels: deviceNames, // Noms des appareils
+          datasets: [{
+              label: 'Consommation (kWh)',  // Légende
+              data: deviceConsumptions, // Consommation des appareils
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Couleur de fond
+              borderColor: 'rgba(75, 192, 192, 1)',  // Couleur de la bordure
+              borderWidth: 1  // Largeur de la bordure
+          }]
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true  // Commencer l'axe Y à 0
+              }
+          }
+      }
+  });
+});
