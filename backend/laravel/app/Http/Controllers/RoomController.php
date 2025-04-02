@@ -38,6 +38,25 @@ class RoomController extends Controller
     return response()->json($rooms); // Renvoie les pièces avec leurs dispositifs associés
 }
 
-    
+public function getRoomsAndDevices()
+{
+    $rooms = Room::with('devices')->where('home_id', auth()->user()->home_id)->get();
+
+    // Formater les données dans une structure appropriée pour la recherche
+    $formattedData = [];
+    foreach ($rooms as $room) {
+        foreach ($room->devices as $device) {
+            $formattedData[] = [
+                'id' => $device->id,
+                'name' => $device->name,
+                'type' => $device->type,
+                'room_name' => $room->name
+            ];
+        }
+    }
+
+    return response()->json($formattedData);
+}
+   
 
 }

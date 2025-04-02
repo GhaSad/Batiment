@@ -111,20 +111,7 @@
     
       <!-- Liste des portes -->
       <div class="item-list">
-    <!-- Liste des portes (données dynamiques) -->
-    @foreach($portes as $porte)
-      <div class="item">
-        <span class="item-name">{{ $porte->name }}</span>
-        <div class="item-actions">
-          <strong class="status">{{ $porte->status ? 'Activée' : 'Désactivée' }}</strong>
-          <label class="switch">
-            <input type="checkbox" class="toggle-switch" {{ $porte->status ? 'checked' : '' }}>
-            <span class="slider"></span>
-          </label>
-        </div>
       </div>
-    @endforeach
-  </div>
     
       <!-- Bouton Ajouter -->
       <button class="btn small-btn role-admin btn-ajouter-porte" onclick="ouvrirModal('porte')">Ajouter une porte</button>
@@ -135,19 +122,7 @@
       <h3>Fenêtres</h3>
     
       <div class="item-list">
-    @foreach($fenetres as $fenetre)
-      <div class="item">
-        <span class="item-name">{{ $fenetre->name }}</span>
-        <div class="item-actions">
-          <strong class="status">{{ $fenetre->status ? 'Activée' : 'Désactivée' }}</strong>
-          <label class="switch">
-            <input type="checkbox" class="toggle-switch" {{ $fenetre->status ? 'checked' : '' }}>
-            <span class="slider"></span>
-          </label>
-        </div>
       </div>
-    @endforeach
-  </div>
     
       <!-- Bouton Ajouter -->
       <button class="btn small-btn role-admin" onclick="ouvrirModal('fenetre')">Ajouter une fenêtre</button>
@@ -157,19 +132,7 @@
       <h3>Alarme</h3>
     
       <div class="item-list">
-    @foreach($alarmes as $alarme)
-      <div class="item">
-        <span class="item-name">{{ $alarme->name }}</span>
-        <div class="item-actions">
-          <strong class="status">{{ $alarme->status ? 'Activée' : 'Désactivée' }}</strong>
-          <label class="switch">
-            <input type="checkbox" class="toggle-switch" {{ $alarme->status ? 'checked' : '' }}>
-            <span class="slider"></span>
-          </label>
-        </div>
       </div>
-    @endforeach
-  </div>
     
       <!-- Bouton Ajouter -->
       <button class="btn small-btn role-admin btn-ajouter-alarme" onclick="ouvrirModal('alarme')">Ajouter une alarme</button>
@@ -317,21 +280,16 @@
   <p>Contrôlez vos lumières, enceintes et autres appareils connectés.</p>
 
   <!-- Liste dynamique des objets connectés -->
-  <div id="liste-objets-connectes" class="sub-tab-container item-list">
-  <!-- Objets connectés générés dynamiquement via PHP Blade ou JavaScript -->
-  @foreach($devices as $device)
-    <div class="item" data-id="{{ $device->id }}">
-      <span class="item-name">{{ $device->name }}</span>
-      <div class="item-actions">
-        <strong class="status">{{ $device->status ? 'Activé' : 'Désactivé' }}</strong>
-        <label class="switch">
-          <input type="checkbox" class="toggle-switch-connecte" {{ $device->status ? 'checked' : '' }}>
-          <span class="slider"></span>
-        </label>
+  <div id="liste-objets" class="sub-tab-container item-list">
+    <!-- Objets générés dynamiquement via PHP Blade -->
+    @foreach($devices as $device)
+      <div class="objet-item">
+        <p><strong>{{ $device->name }}</strong></p>
+        <p>{{ $device->description }}</p>
+        <p>Status: {{ $device->status ? 'Actif' : 'Inactif' }}</p>
       </div>
-    </div>
-  @endforeach
-</div>
+    @endforeach
+  </div>
 
   <!-- Bouton pour ouvrir le modal d'ajout -->
   <button class="btn role-admin" onclick="ouvrirModalObjet()">Ajouter un objet</button>
