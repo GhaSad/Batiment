@@ -56,7 +56,6 @@ public function getRoomsAndDevices()
     }
 
     return response()->json($formattedData);
-}
-   
+}   
 
 }

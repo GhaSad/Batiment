@@ -134,4 +134,6 @@ Route::post('/logout', function () {
     return response()->json(['success' => true]);  // Retourne un message JSON de succès
 })->name('logout');
 
+Route::get('/api/rooms-and-devices', [RoomController::class, 'getRoomsAndDevices']);
+
 ?>

@@ -88,35 +88,53 @@ alarmes.forEach(switchEl => {
 const searchInput = document.getElementById('search-bar');
 const suggestionsBox = document.querySelector('.suggestions');
 
-// === Liste TEMPORAIRE ===
-let objets = [
-  { id: 'porte-entree', name: 'Porte d\'entrée', tab: 'securite', target: 'portes-section' },
-  { id: 'fenetre1', name: 'Fenêtre 1', tab: 'securite', target: 'fenetres-section' },
-  { id: 'fenetre2', name: 'Fenêtre 2', tab: 'securite', target: 'fenetres-section' },
-  { id: 'alarme1', name: 'Alarme principale 1', tab: 'securite', target: 'alarme-section' }
-];
+// === Fonction pour récupérer toutes les pièces et objets ===
+async function fetchRoomsAndDevices() {
+  try {
+    const response = await fetch('/api/rooms-and-devices'); // Récupère toutes les pièces et objets
+    const data = await response.json();
+    return data; // Retourne les objets et pièces
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données:', error);
+    return [];
+  }
+}
 
 // === Suggestions dynamiques ===
-searchInput.addEventListener('input', () => {
+searchInput.addEventListener('input', async () => {
   const query = searchInput.value.toLowerCase();
   suggestionsBox.innerHTML = '';
 
   if (query.length > 1) {
-    const filtered = objets.filter(obj => obj.name.toLowerCase().includes(query));
+    const allItems = await fetchRoomsAndDevices(); // Récupérer les objets et pièces
 
+    // Filtrer les objets et pièces en fonction de la saisie
+    const filtered = [];
+    allItems.forEach(item => {
+      // Vérifie si l'objet ou la pièce correspond à la recherche
+      if (
+        item.name.toLowerCase().includes(query) || 
+        (item.room_name && item.room_name.toLowerCase().includes(query))
+      ) {
+        // Si l'objet n'est pas déjà dans le tableau, l'ajoute
+        if (!filtered.some(existingItem => existingItem.name === item.name)) {
+          filtered.push(item);
+        }
+      }
+    });
+
+    // Afficher les résultats filtrés
     filtered.forEach(result => {
       const div = document.createElement('div');
       div.textContent = result.name;
 
       div.addEventListener('click', () => {
-        openTab(result.tab);
+        openTab(result.room_name);
 
         // Ouvre le sous-onglet si précisé
-        if (result.target) {
-          const subButton = document.querySelector(`.btn2[data-target="${result.target}"]`);
-          if (subButton && !subButton.classList.contains('active')) {
-            subButton.click();
-          }
+        const subButton = document.querySelector(`.btn2[data-target="${result.room_name}"]`);
+        if (subButton && !subButton.classList.contains('active')) {
+          subButton.click();
         }
 
         highlightItem(result.name);
@@ -142,15 +160,18 @@ document.addEventListener('click', (e) => {
 
 // Ouvre onglet principal
 function openTab(tabId) {
+  const mainTabs = document.querySelectorAll('.main-tab');  // Sélectionne tous les onglets principaux
   mainTabs.forEach(tab => tab.classList.add('hidden'));
   const targetTab = document.getElementById(tabId);
-  targetTab.classList.remove('hidden');
+  if (targetTab) {
+    targetTab.classList.remove('hidden');
+  }
 }
 
 // Scroll + Highlight visuel
 function highlightItem(itemName) {
   const items = document.querySelectorAll('.item-name, .btn2-text');
-
+  
   items.forEach(item => {
     if (item.textContent.trim().toLowerCase() === itemName.toLowerCase()) {
       item.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -161,6 +182,8 @@ function highlightItem(itemName) {
     }
   });
 }
+
+
 
 //########################################## Sécurité   ##########################################
 
