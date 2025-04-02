@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use App\Models\Room;
+use App\Models\Device;
+
 
 class UserController extends Controller
 {
@@ -201,7 +205,69 @@ public function update(Request $request, $userId = null)
     return redirect()->route('home')->with('success', 'Profil mis à jour avec succès');
 }
 
+public function demo()
+{
+    // Vérifier si l'utilisateur de démo existe déjà
+    $user = User::where('email', 'demo@example.com')->first();  // Vérifiez avec l'email ou un identifiant unique
+    
+    if (!$user) {
+        // Si l'utilisateur n'existe pas, on le crée
+        $user = User::create([
+            'username' => 'Demo User',
+            'email' => 'demo@example.com',
+            'password' => Hash::make('demo1234'),  // Un mot de passe de démo
+            'role' => 'parent',  // Le rôle spécifique pour la démo
+            'date_de_naissance' => '2000-01-01',  // Date de naissance
+            'sexe' => 'homme',
+            'age' => 25,
+            'home_id' => 2,  // Remplacez ceci par l'ID réel du foyer de l'utilisateur
+        ]);
+        
+        // Créer des objets connectés pour l'utilisateur de démo
+        $home_id = $user->home_id;  // Récupérer l'ID de la maison de l'utilisateur
+        
+        // Liste d'exemples d'objets connectés à ajouter
+        
 
+        $rooms = [
+            ['name' => 'Salon', 'home_id' => 2],
+            ['name' => 'Chambre', 'home_id' => 2],
+            ['name' => 'Cuisine', 'home_id' => 2],
+        ];
 
+        foreach ($rooms as $roomData) {
+            $room = Room::create($roomData);
+        }
 
+        $devices = [
+            ['name' => 'Porte d\'entrée', 'type' => 'porte', 'room_id' => 1],
+            ['name' => 'Fenêtre salon', 'type' => 'fenetre', 'room_id' => 1],
+            ['name' => 'Alarme principale', 'type' => 'alarme', 'room_id' => 1],
+            ['name' => 'Lumière salon', 'type' => 'lumiere', 'room_id' => 1],
+            ['name' => 'Télévision', 'type' => 'tele', 'room_id' => 2],
+        ];
+
+        // Ajouter les objets à la base de données
+        foreach ($devices as $deviceData) {
+            Device::create([
+                'name' => $deviceData['name'],
+                'type' => $deviceData['type'],
+                'room_id' => $deviceData['room_id'],
+                'home_id' => $user->home_id,
+                'status' => 'inactif',  // Statut par défaut
+                'energy_usage' => rand(0, 100)  // Consommation d'énergie aléatoire
+            ]);
+        }
+    }
+
+    // Connecter l'utilisateur de démo
+    Auth::login($user);
+
+    // Rediriger vers la page d'accueil (home)
+    return view('home', [
+        'devices' => Device::where('home_id', $user->home_id)->get(),
+        'rooms' => Room::where('home_id', $user->home_id)->get(),
+    ]);
+    
+}
 }
