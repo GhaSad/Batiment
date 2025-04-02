@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -78,13 +79,13 @@ class UserController extends Controller
         'password' => 'required|min:6|confirmed',
         'date_de_naissance' => 'required|date',
         'sexe' => 'required|in:homme,femme,autre',
-        'role' => 'required|in:invite,enfant,admin,parent', // Profils possibles
-        'home_id' => 'required|integer|max:255',
+        'role' => 'required|in:invite,enfant,admin,parent',
     ]);
 
     $dateNaissance = \Carbon\Carbon::parse($request->date_de_naissance);
     $age = $dateNaissance->age; // Calculer l'âge avec Carbon
 
+    $homeId = Auth::user()->home_id;
     // Créer l'utilisateur
     $user = User::create([
         'username' => $request->prenom . ' ' . $request->nom,
@@ -94,7 +95,7 @@ class UserController extends Controller
         'date_de_naissance' => $request->date_de_naissance,
         'sexe' => $request->sexe,
         'age' => $age,
-        'home_id' => $request->home_id,
+        'home_id' => $homeId,
     ]);
     Log::info('Redirection vers la page d\'accueil après la création de l\'utilisateur');
 

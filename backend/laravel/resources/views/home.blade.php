@@ -196,85 +196,81 @@
       <i class="fas fa-fire"></i>
       <span class="btn2-text">Chauffage</span>
     </button>
-
-    <button class="btn2" data-target="eau-section">
-      <i class="fas fa-tint"></i>
-      <span class="btn2-text">Eau</span>
-    </button>
-  </div>
 </section>
 
   
   <!-- Sous-sections Énergie -->
   <div class="sub-tab-container">
     <section id="elec-section" class="sub-tab hidden">
-      <h3>Électricité</h3>
-      <canvas id="graphElectricite" width="400" height="200"></canvas>
-      <div id="devicesData" 
-    data-devices="{{ json_encode($devices) }}">
-</div>
-      <table>
-    <thead>
-      <tr>
-        <th>Appareil</th>
-        <th>Consommation</th>
-      </tr>
-    </thead>
-    <tbody>
-    @foreach($devices as $device)
-    @if($device->energyUsage && is_object($device->energyUsage))  <!-- Vérifie si energyUsage existe et est un objet -->
-        <tr>
-            <td>{{ $device->name }}</td>
-            <td>{{ number_format($device->energyUsage->consumption, 2) }} kWh</td>  <!-- Affiche la consommation -->
-        </tr>
-    @else
-        <tr>
-            <td>{{ $device->name }}</td>
-            <td>Pas de données</td> <!-- Si aucune consommation n'est trouvée -->
-        </tr>
-    @endif
-@endforeach
+        <h3>Électricité</h3>
+        
+        <!-- Graphique pour la consommation -->
+        <canvas id="graphElectricite" width="400" height="200"></canvas>
+        
+        <!-- Div pour stocker les données des dispositifs -->
+        <div id="devicesData" data-devices="{{ json_encode($devices) }}"></div>
 
-    </tbody>
-  </table>
+        <!-- Tableau des appareils et de leur consommation -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Appareil</th>
+                    <th>Consommation</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($devices as $device)
+                    <!-- Affiche la consommation d'énergie -->
+                    <tr>
+                        <td>{{ $device->name }}</td>
+                        <td>{{ number_format($device->energy_usage, 2) }} kWh</td>  <!-- Affiche la consommation -->
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
 
-  <div class="total">
-  Total : 
-  @php
-    $totalConsumption = $devices->sum(function($device) {
-        // Vérifie si energyUsage existe et est non null avant d'ajouter la consommation
-        return $device->energyUsage ? $device->energyUsage->consumption : 0;
-    });
-  @endphp
-  {{ number_format($totalConsumption, 2) }} kWh
-</div>
-    </section>
-  
-    <section id="chauffage-section" class="sub-tab hidden">
-      <h3>Chauffage</h3>
-      <table>
-        <thead><tr><th>Zone</th><th>Consommation</th></tr></thead>
-        <tbody>
-          <tr><td>Salon</td><td>3.8 kWh</td></tr>
-          <tr><td>Chambre</td><td>2.5 kWh</td></tr>
-        </tbody>
-      </table>
-      <div class="total">Total : 6.3 kWh</div>
-      <div class="temp-info">🌡️ Intérieure : 21°C | Extérieure : 13°C</div>
-    </section>
-  
-    <section id="eau-section" class="sub-tab hidden">
-      <h3>Eau</h3>
-      <table>
-        <thead><tr><th>Appareil</th><th>Consommation</th></tr></thead>
-        <tbody>
-          <tr><td>Lave-linge</td><td>50 L</td></tr>
-          <tr><td>Lave-vaisselle</td><td>40 L</td></tr>
-        </tbody>
-      </table>
-      <div class="total">Total : 90 L</div>
+        <!-- Calcul du total de consommation -->
+        <div class="total">
+            Total : 
+            @php
+                $totalConsumption = $devices->sum('energy_usage');  // Additionne la consommation de tous les appareils
+            @endphp
+            {{ number_format($totalConsumption, 2) }} kWh
+        </div>
     </section>
   </div>
+
+  
+    <section id="chauffage-section" class="sub-tab hidden">
+    <h3>Chauffage</h3>
+
+<!-- Tableau des pièces et de leur consommation de chauffage -->
+<table>
+    <thead>
+        <tr>
+            <th>Zone</th>
+            <th>Consommation</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($rooms as $room)
+            <tr>
+                <td>{{ $room->name }}</td>
+                <td>{{ number_format($room->heating_consumption, 2) }} kWh</td>  <!-- Affiche la consommation de chauffage -->
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+
+<!-- Calcul de la consommation totale -->
+<div class="total">
+    Total : 
+    @php
+        $totalConsumption = $rooms->sum('heating_consumption');  // Additionne la consommation de chauffage de toutes les pièces
+    @endphp
+    {{ number_format($totalConsumption, 2) }} kWh
+</div>
+    </section>
 
 <!-- ########################################## Objets connectés ########################################## -->
 

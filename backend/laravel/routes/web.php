@@ -9,6 +9,8 @@ use App\Models\Logs;
 use App\Models\Room;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserCreated;
 
 
 
@@ -19,6 +21,21 @@ Route::get('/users', [UserController::class, 'index']);
 
 // Route pour afficher la liste des dispositifs
 Route::get('/device', [DeviceController::class, 'index']);
+
+
+
+Route::get('/test-email', function () {
+    $user = \App\Models\User::find(1);  // Ou crée un utilisateur de test
+    Mail::to('ton_email_de_test@example.com')->send(new UserCreated($user));
+    return 'Test email sent';
+});
+
+// Route pour afficher les pièces et leurs objets associés
+
+Route::get('/api/rooms/{roomId}/devices', function ($roomId) {
+    $room = Room::with('devices')->findOrFail($roomId);  // Récupère la pièce avec ses objets associés
+    return response()->json($room->devices);  // Retourne les objets de la pièce
+});
 
 
 

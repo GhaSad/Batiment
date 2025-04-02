@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->enum('type',['porte','fenetre','alarme','lumiere','tele','enceinte','appareil','aspirateur','tondeuse','prise','arrosage','thermostat','volet','serrure','lave_linge','lave_vaisselle','four','autre']);
             $table->enum('status',['actif','inactif']);
+            $table->float('energy_usage')->nullable();
             //Clé etrangere
             $table->foreignId('home_id')->constrained('homes')->onDelete('cascade');
             $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');

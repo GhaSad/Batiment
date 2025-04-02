@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Room;
 use App\Models\Device;
 use App\Models\Logs;
+use Faker\Factory as Faker;
 
 class DeviceController extends Controller
 {
@@ -36,12 +37,16 @@ class DeviceController extends Controller
     // Vérifiez si l'utilisateur est authentifié avant de procéder à la création
     $home_id = auth()->user()->home_id; // Récupérer l'ID de la maison de l'utilisateur connecté
 
+    // Initialisation de Faker
+    $faker = Faker::create();
+
     // Création de l'objet dans la base de données
     try {
         $device = Device::create([
             'name' => $request->nom,
             'type' => $request->type, // Utilisation du type du formulaire
             'status' => 'inactif', // Valeur par défaut pour le status
+            'energy_usage' => $faker->randomFloat(2, 0, 100),
             'home_id' => $home_id, // Utilisation de l'ID de la maison de l'utilisateur connecté
             'room_id' => $request->piece_id, // Utilisation de l'ID de la pièce sélectionnée dans le formulaire
         ]);
