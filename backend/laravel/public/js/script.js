@@ -614,7 +614,7 @@ fetch('/api/utilisateurs')
         Email: ${user.email}<br>
         Role: ${user.role || 'Non défini'}<br>
         Home ID: ${user.home_id}<br>  <!-- Afficher le home_id ici -->
-        <button class="btn" onclick="gererUtilisateur(${user.id})">Gérer</button>
+        <button class="btn" onclick="window.location.href='/profil/${user.id}'">Gérer</button>
       `;
       usersList.appendChild(userDiv); // Ajouter l'utilisateur à la liste
 
@@ -636,6 +636,11 @@ fetch('/api/utilisateurs')
     });
   })
   .catch(err => console.error('Erreur lors du chargement des utilisateurs:', err));
+
+  function gererUtilisateur(userId) {
+    // Rediriger vers la page Profil avec l'ID de l'utilisateur dans l'URL
+    window.location.href = `/profil/${userId}`;
+  }
 
 
 // Charger tous les dispositifs depuis l'API

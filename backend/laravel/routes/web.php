@@ -136,4 +136,12 @@ Route::post('/logout', function () {
 
 Route::get('/api/rooms-and-devices', [RoomController::class, 'getRoomsAndDevices']);
 
+// Route pour afficher le profil de l'utilisateur connecté
+Route::get('/profil', [UserController::class, 'showProfile'])->name('profil');
+
+// Route pour afficher le profil d'un autre utilisateur par ID
+Route::get('/profil/{userId}', [UserController::class, 'showProfileById'])->name('profil.show');
+
+// Route pour mettre à jour les informations de l'utilisateur
+Route::match(['put', 'post'], '/profil/update/{userId?}', [UserController::class, 'update'])->name('profile.update');
 ?>

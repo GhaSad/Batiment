@@ -135,4 +135,73 @@ class UserController extends Controller
         // Message de succès et redirection
         return redirect()->route('home')->with('success', 'Utilisateur créé avec succès');
     }
+
+    public function showProfile()
+    {
+        // Récupérer l'utilisateur connecté
+        $user = auth()->user();
+    
+        // Passer les données de l'utilisateur connecté à la vue
+        return view('profil', ['user' => $user]);
+    }
+    
+    public function showProfileById($userId)
+{
+    // Récupérer les données de l'utilisateur en fonction de l'ID passé dans l'URL
+    $user = User::findOrFail($userId);  // Si l'utilisateur n'existe pas, une erreur 404 sera lancée
+
+    // Passer les données de l'utilisateur à la vue
+    return view('profil', ['user' => $user]);
+}
+
+
+public function update(Request $request, $userId = null)
+{
+    // Si un ID d'utilisateur est passé en paramètre (par exemple, pour un admin qui gère un autre utilisateur)
+    if ($userId) {
+        // Vérifier que l'utilisateur connecté a bien les droits pour modifier cet utilisateur
+        // Par exemple, vérifier si l'utilisateur est un administrateur
+        if (auth()->user()->role != 'admin') {
+            return redirect()->route('home')->with('error', 'Vous n\'avez pas la permission de modifier cet utilisateur.');
+        }
+        // Récupérer l'utilisateur à mettre à jour par son ID
+        $user = User::findOrFail($userId);  // Si l'utilisateur n'existe pas, une erreur 404 sera lancée
+    } else {
+        // Si aucun ID n'est passé, mettre à jour l'utilisateur connecté
+        $user = auth()->user();
+    }
+
+    // Validation des données du formulaire
+    $validated = $request->validate([
+        'prenom' => 'required|string|max:255',
+        'nom' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,' . $user->id,  // Validation de l'email unique pour cet utilisateur
+        'password' => 'nullable|min:6|confirmed',  // Mot de passe optionnel mais confirmé
+    ]);
+
+    // Mettre à jour les informations de l'utilisateur
+    $user->username = $request->prenom . ' ' . $request->nom; // Mettre à jour le nom d'utilisateur
+    $user->email = $request->email; // Mettre à jour l'email
+
+    // Si un mot de passe est fourni, le mettre à jour
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->password);
+    }
+
+    // Sauvegarder les modifications
+    $user->save();
+
+    // Redirection vers la page appropriée avec un message de succès
+    if ($userId) {
+        // Si on a modifié un autre utilisateur, on le redirige vers son profil
+        return redirect()->route('profil.show', $user->id)->with('success', 'Profil mis à jour avec succès');
+    }
+
+    // Si on a modifié l'utilisateur connecté, on le redirige vers la page d'accueil
+    return redirect()->route('home')->with('success', 'Profil mis à jour avec succès');
+}
+
+
+
+
 }
