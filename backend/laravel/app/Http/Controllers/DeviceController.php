@@ -15,15 +15,28 @@ class DeviceController extends Controller
      */
     public function index()
 {
-    // Récupérer toutes les pièces avec les dispositifs associés
-    $rooms = Room::with('devices')->get();
-    
-    // Récupérer tous les dispositifs (si nécessaire pour d'autres parties de la vue)
-    $devices = Device::all();
+    // Récupérer toutes les pièces de la maison de l'utilisateur
+    $rooms = Room::where('home_id', auth()->user()->home_id)->get();
 
-    // Retourner la vue 'home' avec les pièces et les dispositifs
-    return view('home', compact('rooms', 'devices'));
+    // Récupérer tous les dispositifs associés à la maison de l'utilisateur
+    $devices = Device::where('home_id', auth()->user()->home_id)->get();
+
+    // Filtrer les dispositifs par type
+    $portes = $devices->where('type', 'porte');
+    $fenetres = $devices->where('type', 'fenetre');
+    $alarmes = $devices->where('type', 'alarme');
+
+    // Passer les données à la vue
+    return view('home', [
+        'devices' => $devices,  // Tous les dispositifs
+        'rooms' => $rooms,      // Toutes les pièces
+        'portes' => $portes,    // Dispositifs de type "porte"
+        'fenetres' => $fenetres, // Dispositifs de type "fenetre"
+        'alarmes' => $alarmes,   // Dispositifs de type "alarme"
+    ]);
 }
+
+
 
     public function store(Request $request)
 {
