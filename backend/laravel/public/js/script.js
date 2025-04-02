@@ -540,15 +540,6 @@ fetch('/api/rooms')
 
 const objetsConnectesDispo = [
   { type: 'Lumière', icon: 'fas fa-lightbulb', action: 'Allumer / Éteindre' },
-  { type: 'Télé', icon: 'fas fa-tv', action: 'Allumer / Éteindre' },
-  { type: 'Enceinte', icon: 'fas fa-volume-up', action: 'Allumer / Éteindre + Volume' },
-  { type: 'Prise connectée', icon: 'fas fa-plug', action: 'On / Off' },
-  { type: 'Caméra', icon: 'fas fa-video', action: 'Activer / Désactiver' },
-  { type: 'Volet roulant', icon: 'fas fa-window-maximize', action: 'Monter / Descendre' },
-  { type: 'Climatisation', icon: 'fas fa-fan', action: 'On / Off + Température' },
-  { type: 'Capteur de mouvement', icon: 'fas fa-running', action: 'Actif / Inactif' },
-  { type: 'Détecteur de fumée', icon: 'fas fa-fire-extinguisher', action: 'Signal seulement' },
-  { type: 'Radiateur', icon: 'fas fa-thermometer-half', action: 'On / Off + Chauffe' },
 ];
 
 const listeObjets = document.getElementById('liste-objets');
