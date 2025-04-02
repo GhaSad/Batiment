@@ -72,6 +72,13 @@
       </div>
 
       <button type="submit" class="btn">Mettre à jour</button>
+<!-- Bouton Retour sans validation -->
+<a href="{{ route('home') }}"> <!-- Remplace avec la route de la page d'accueil ou de la page souhaitée -->
+  <button type="button" class="btn">
+    <i class="fas fa-arrow-left"></i> Retour à l'accueil
+  </button>
+</a>
+
     </form>
   </div>
 </div>
