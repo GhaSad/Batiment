@@ -180,11 +180,6 @@
         <i class="fas fa-fire"></i>
         <span class="btn2-text">Chauffage</span>
       </button>
-      
-      <button class="btn2" data-target="eau-section">
-        <i class="fas fa-tint"></i>
-        <span class="btn2-text">Eau</span>
-      </button>
     </div>
   </section>
   
@@ -300,48 +295,6 @@
     </section>
 
   </main>
-
-  <!-- ########################################## SCRIPT ########################################## -->
-  <script src="script.js"></script>
-  <script>
-    const ctx = document.getElementById('graphElectricite').getContext('2d');
-    const graphElectricite = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
-        datasets: [{
-          label: 'kWh',
-          data: [3.2, 4.1, 3.8, 4.6, 4.0, 3.5, 4.3],
-          borderWidth: 2,
-          fill: true,
-          backgroundColor: 'rgba(100,149,237,0.1)',
-          borderColor: 'cornflowerblue',
-          tension: 0.3,
-          pointRadius: 4
-        }]
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
-            title: {
-              display: true,
-              text: 'kWh'
-            }
-          },
-          x: {
-            title: {
-              display: true,
-              text: 'Jour'
-            }
-          }
-        }
-      }
-    });
-  </script>
-  
-
 </body>
 
 </html>
