@@ -144,4 +144,8 @@ Route::get('/profil/{userId}', [UserController::class, 'showProfileById'])->name
 
 // Route pour mettre à jour les informations de l'utilisateur
 Route::match(['put', 'post'], '/profil/update/{userId?}', [UserController::class, 'update'])->name('profile.update');
+
+// Route pour la page de démo
+Route::get('/demo', [UserController::class, 'demo'])->name('demo');
+
 ?>

@@ -34,7 +34,7 @@
       <button class="btn" id="openModal">Se connecter / S'inscrire</button>
     </div>
     <div class="container-demo">
-    <button class="btn demo-btn" id="demoButton">Voir la démo</button>
+    <button class="btn demo-btn" onclick="window.location.href='{{ route('demo') }}'">Voir la démo</button>
     </div>
   
   </header>
