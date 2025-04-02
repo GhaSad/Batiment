@@ -590,9 +590,26 @@ fetch('/api/utilisateurs')
         <strong>${user.username}</strong><br>
         Email: ${user.email}<br>
         Role: ${user.role || 'Non défini'}<br>
+        Home ID: ${user.home_id}<br>  <!-- Afficher le home_id ici -->
         <button class="btn" onclick="gererUtilisateur(${user.id})">Gérer</button>
       `;
       usersList.appendChild(userDiv); // Ajouter l'utilisateur à la liste
+
+      // Récupérer l'élément du champ home_id
+    const homeIdInput = document.getElementById('home_id');
+
+    // Vérifier si la donnée home_id est présente
+    if (data && data.length > 0) {
+      // Récupérer le home_id de l'utilisateur (tu peux aussi choisir un autre utilisateur dans les données si nécessaire)
+      const user = data[0];  // Par exemple, récupérer le premier utilisateur dans la liste
+      const homeId = user.home_id;  // Extraire le home_id de l'utilisateur
+
+      // Remplir le champ home_id avec la valeur récupérée
+      if (homeIdInput) {
+        homeIdInput.value = homeId;
+        homeIdInput.setAttribute('readonly', 'true'); // Rendre le champ en lecture seule
+      }
+    }
     });
   })
   .catch(err => console.error('Erreur lors du chargement des utilisateurs:', err));

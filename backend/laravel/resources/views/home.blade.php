@@ -460,7 +460,7 @@
         </div>
         <div class="form-group">
         <label for="home_id">Home Id</label>
-        <input type="text" id="home_id" name="home_id" required>
+        <input type="text" id="home_id" name="home_id" readonly required>
       </div>
         <button type="submit" class="btn">Créer le compte</button>
       </form>
