@@ -539,7 +539,6 @@ fetch('/api/rooms')
 // ###################### OBJETS CONNECTÉS DÉMO ######################
 
 const objetsConnectesDispo = [
-  { type: 'Lumière', icon: 'fas fa-lightbulb', action: 'Allumer / Éteindre' },
 ];
 
 const listeObjets = document.getElementById('liste-objets');
