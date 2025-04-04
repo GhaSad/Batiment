@@ -264,10 +264,7 @@ public function demo()
     Auth::login($user);
 
     // Rediriger vers la page d'accueil (home)
-    return view('home', [
-        'devices' => Device::where('home_id', $user->home_id)->get(),
-        'rooms' => Room::where('home_id', $user->home_id)->get(),
-    ]);
+    return view('home');
     
 }
 }

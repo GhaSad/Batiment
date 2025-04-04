@@ -15,14 +15,11 @@
   
 <!-- Boutons à gauche et à droite en haut -->
 <div class="btn-container">
-<div class="settings-container">
-    <a href="{{ route('profil') }}">
-        <button class="settings-btn">
-            <i class="fas fa-cogs"></i>
-        </button>
-    </a>
-</div>
-
+  <div class="settings-container">
+    <button class="settings-btn">
+      <i class="fas fa-cogs"></i>
+    </button>
+  </div>
 
   <div class="logout-container">
     <button class="logout-btn" id="logoutBtn">
